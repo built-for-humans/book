@@ -1,0 +1,1738 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Built for Humans — The AI-Native Founder's Guide</title>
+<meta name="description" content="Why the founders who win Y Combinator build for people, not portfolios. A field guide by Sreekesari Vangeepuram, with an interactive six-week execution checklist and idea evaluation matrix.">
+<meta name="color-scheme" content="light dark">
+<meta property="og:title" content="Built for Humans — The AI-Native Founder's Guide">
+<meta property="og:description" content="Why the founders who win Y Combinator build for people, not portfolios.">
+<meta property="og:type" content="book">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2315140E'/%3E%3Ccircle cx='32' cy='32' r='12' fill='%23D85A2C'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,400;1,8..60,500&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+    :root{
+      --ink:#19170F;
+      --ink-soft:#5B5640;
+      --paper:#FBF7EE;
+      --paper-dim:#F1EAD8;
+      --paper-line:#E2D9C2;
+      --console:#15140E;
+      --console-soft:#201E15;
+      --console-text:#ECE6D5;
+      --console-dim:#8C8770;
+      --console-line:#332F1F;
+      --coral:#D85A2C;
+      --coral-soft:#F0A87C;
+      --amber:#BD8A30;
+      --moss:#69895A;
+      --moss-soft:#DCE7D4;
+      --rule:#D9CFB3;
+      --shadow:0 18px 40px -22px rgba(20,18,10,.45);
+      --serif-display:'Fraunces',serif;
+      --serif-body:'Source Serif 4',serif;
+      --mono:'IBM Plex Mono',monospace;
+      --sidebar-w:300px;
+      --speed:.25s;
+    }
+    html.dark-read{
+      --ink:#ECE6D3;
+      --ink-soft:#B3AC92;
+      --paper:#1C1B14;
+      --paper-dim:#262417;
+      --paper-line:#3A371F;
+      --rule:#3A371F;
+      --moss-soft:#26301F;
+    }
+    *,*::before,*::after{box-sizing:border-box;}
+    html{scroll-behavior:smooth;}
+    @media (prefers-reduced-motion:reduce){
+      html{scroll-behavior:auto;}
+      *,*::before,*::after{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.001ms !important;scroll-behavior:auto !important;}
+    }
+    body{
+      margin:0;
+      background:var(--paper);
+      color:var(--ink);
+      font-family:var(--serif-body);
+      font-size:18px;
+      line-height:1.7;
+      -webkit-font-smoothing:antialiased;
+      transition:background var(--speed) ease,color var(--speed) ease;
+    }
+    a{color:var(--coral);}
+    .skip-link{
+      position:absolute;left:-999px;top:0;background:var(--coral);color:#fff;
+      padding:.75rem 1.25rem;z-index:999;font-family:var(--mono);font-size:.85rem;
+      border-radius:0 0 6px 0;
+    }
+    .skip-link:focus{left:0;}
+    ::selection{background:var(--coral-soft);color:#19170F;}
+    :focus-visible{outline:2px solid var(--coral);outline-offset:3px;}
+
+    /* progress bar */
+    #progress{
+      position:fixed;top:0;left:0;height:3px;width:0%;
+      background:linear-gradient(90deg,var(--coral),var(--amber));
+      z-index:300;transition:width .08s linear;
+    }
+
+    /* mobile top bar */
+    #mobilebar{
+      display:none;position:fixed;top:3px;left:0;right:0;height:54px;
+      background:var(--console);color:var(--console-text);z-index:270;
+      align-items:center;gap:.75rem;padding:0 1rem;
+      font-family:var(--mono);font-size:.78rem;letter-spacing:.04em;
+      border-bottom:1px solid var(--console-line);
+    }
+    #mobilebar .cur{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--console-dim);text-transform:uppercase;}
+    #menubtn{
+      background:none;border:1px solid var(--console-line);color:var(--console-text);
+      width:38px;height:38px;border-radius:7px;display:flex;align-items:center;justify-content:center;
+      cursor:pointer;flex-shrink:0;
+    }
+    #menubtn span, #menubtn span::before, #menubtn span::after{
+      content:"";display:block;width:16px;height:2px;background:var(--console-text);position:relative;
+    }
+    #menubtn span::before{position:absolute;top:-5px;}
+    #menubtn span::after{position:absolute;top:5px;}
+
+    /* layout */
+    .layout{display:flex;}
+    #scrim{display:none;position:fixed;inset:0;background:rgba(10,9,5,.5);z-index:240;}
+    #scrim.show{display:block;}
+
+    .sidebar{
+      position:fixed;top:0;left:0;bottom:0;width:var(--sidebar-w);
+      background:var(--console);color:var(--console-text);
+      overflow-y:auto;z-index:260;
+      border-right:1px solid var(--console-line);
+      transition:transform var(--speed) ease;
+      scrollbar-width:thin;scrollbar-color:var(--console-line) transparent;
+    }
+    .sidebar::-webkit-scrollbar{width:8px;}
+    .sidebar::-webkit-scrollbar-thumb{background:var(--console-line);border-radius:4px;}
+
+    .brand{
+      padding:1.6rem 1.5rem 1.1rem;border-bottom:1px solid var(--console-line);
+    }
+    .brand .mark{
+      font-family:var(--mono);font-size:.7rem;letter-spacing:.14em;color:var(--coral-soft);
+      text-transform:uppercase;display:flex;align-items:center;gap:.45rem;
+    }
+    .brand .mark::before{content:"●";color:var(--coral);font-size:.6rem;}
+    .brand h1{
+      font-family:var(--serif-display);font-size:1.5rem;line-height:1.15;margin:.55rem 0 .15rem;
+      font-weight:600;color:var(--console-text);
+    }
+    .brand p{margin:0;font-size:.82rem;color:var(--console-dim);line-height:1.45;}
+
+    .toolbar{
+      display:flex;gap:.5rem;padding:.85rem 1.5rem;border-bottom:1px solid var(--console-line);
+    }
+    .toolbtn{
+      flex:1;background:var(--console-soft);border:1px solid var(--console-line);color:var(--console-text);
+      font-family:var(--mono);font-size:.72rem;letter-spacing:.03em;padding:.55rem .4rem;
+      border-radius:6px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:.35rem;
+      transition:border-color var(--speed),color var(--speed);
+    }
+    .toolbtn:hover{border-color:var(--coral-soft);color:var(--coral-soft);}
+
+    nav.toc{padding:.6rem 0 2.5rem;}
+    .toc .group-label{
+      font-family:var(--mono);font-size:.68rem;letter-spacing:.12em;color:var(--console-dim);
+      text-transform:uppercase;padding:1.1rem 1.5rem .4rem;
+    }
+    .toc .front-link, .toc a.chap{
+      display:flex;align-items:baseline;gap:.6rem;padding:.4rem 1.5rem;
+      color:var(--console-text);text-decoration:none;font-size:.86rem;
+      border-left:2px solid transparent;
+    }
+    .toc a.chap .num{font-family:var(--mono);font-size:.74rem;color:var(--console-dim);min-width:1.4em;}
+    .toc a.chap .ttl{flex:1;line-height:1.3;}
+    .toc a.chap .time{font-family:var(--mono);font-size:.65rem;color:var(--console-dim);white-space:nowrap;}
+    .toc a:hover{color:var(--coral-soft);}
+    .toc a.active{
+      color:var(--coral-soft);border-left-color:var(--coral);background:rgba(216,90,44,.08);
+    }
+    .toc .appx-label{font-weight:600;}
+
+    .sidebar footer{
+      padding:1.2rem 1.5rem 2rem;font-family:var(--mono);font-size:.65rem;color:var(--console-dim);
+      border-top:1px solid var(--console-line);
+    }
+    .sidebar footer a{color:var(--console-dim);}
+
+    /* main */
+    .main{margin-left:var(--sidebar-w);flex:1;min-width:0;}
+    .reading-col{max-width:700px;margin:0 auto;padding:5rem 2.2rem 7rem;}
+
+    @media (max-width:980px){
+      #mobilebar{display:flex;}
+      .sidebar{transform:translateX(-100%);box-shadow:var(--shadow);}
+      .sidebar.open{transform:translateX(0);}
+      .main{margin-left:0;}
+      .reading-col{padding:7.5rem 1.3rem 5rem;}
+      body{font-size:17px;}
+    }
+
+    section[id]{scroll-margin-top:1.5rem;}
+    @media (max-width:980px){ section[id]{scroll-margin-top:4.75rem;} }
+
+    /* typography */
+    h1,h2,h3,h4{font-family:var(--serif-display);font-weight:600;color:var(--ink);letter-spacing:-.01em;}
+    .part-kicker{
+      font-family:var(--mono);font-size:.78rem;letter-spacing:.16em;color:var(--coral);text-transform:uppercase;
+      margin:0 0 .6rem;
+    }
+    h2.chapter-title{font-size:2.1rem;line-height:1.18;margin:.1rem 0 .3rem;}
+    .chapter-meta{
+      font-family:var(--mono);font-size:.72rem;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.06em;
+      margin:0 0 2rem;display:flex;gap:1rem;flex-wrap:wrap;
+    }
+    h3{font-size:1.4rem;margin:2.6rem 0 1rem;}
+    h4{font-size:1.08rem;margin:1.8rem 0 .7rem;font-style:italic;}
+    p{margin:0 0 1.25rem;}
+    .lede{font-size:1.12rem;color:var(--ink-soft);}
+    strong{color:var(--ink);}
+    hr.div{border:none;border-top:1px solid var(--rule);margin:3.2rem 0;}
+
+    blockquote.pull{
+      margin:0 0 2.6rem;padding:.2rem 0 .2rem 1.6rem;border-left:3px solid var(--coral);
+      position:relative;
+    }
+    blockquote.pull::before{
+      content:"\201C";position:absolute;left:-.15em;top:-.35em;font-family:var(--serif-display);
+      font-size:3.4rem;color:var(--coral-soft);line-height:1;opacity:.55;
+    }
+    blockquote.pull p{
+      font-family:var(--serif-display);font-style:italic;font-weight:500;font-size:1.22rem;
+      line-height:1.45;color:var(--ink);margin:0 0 .55rem;
+    }
+    blockquote.pull cite{font-family:var(--mono);font-style:normal;font-size:.74rem;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.04em;}
+
+    .callout{
+      background:var(--paper-dim);border:1px solid var(--paper-line);border-left:3px solid var(--amber);
+      border-radius:4px;padding:1.3rem 1.5rem;margin:1.8rem 0 2.2rem;
+    }
+    .callout .ctitle{
+      font-family:var(--mono);font-size:.72rem;letter-spacing:.1em;color:var(--amber);
+      text-transform:uppercase;margin:0 0 .6rem;font-weight:600;
+    }
+    .callout p:last-child{margin-bottom:0;}
+    .callout.story{border-left-color:var(--moss);}
+    .callout.story .ctitle{color:var(--moss);}
+
+    figure.stat-strip{
+      display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--console-line);
+      border:1px solid var(--console-line);border-radius:8px;overflow:hidden;margin:2rem 0 2.6rem;
+    }
+    figure.stat-strip .stat{background:var(--console);color:var(--console-text);padding:1.1rem .9rem;text-align:center;}
+    figure.stat-strip .num{font-family:var(--mono);font-size:1.5rem;color:var(--coral-soft);display:block;}
+    figure.stat-strip .lbl{font-family:var(--mono);font-size:.62rem;letter-spacing:.06em;color:var(--console-dim);text-transform:uppercase;display:block;margin-top:.3rem;}
+    @media (max-width:560px){figure.stat-strip{grid-template-columns:repeat(2,1fr);}}
+
+    .tablewrap{overflow-x:auto;margin:1.6rem 0 2.4rem;border:1px solid var(--paper-line);border-radius:6px;}
+    table{border-collapse:collapse;width:100%;font-size:.92rem;}
+    table caption{
+      text-align:left;font-family:var(--mono);font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;
+      color:var(--ink-soft);padding:.7rem 1rem;background:var(--paper-dim);border-bottom:1px solid var(--paper-line);
+    }
+    th,td{padding:.65rem .9rem;text-align:left;border-bottom:1px solid var(--paper-line);vertical-align:top;}
+    thead th{font-family:var(--mono);font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);background:var(--paper-dim);}
+    tbody tr:last-child td{border-bottom:none;}
+    tbody tr:hover{background:var(--paper-dim);}
+
+    .codeblock{
+      background:var(--console);color:var(--console-text);border-radius:8px;margin:1.6rem 0 2.2rem;
+      overflow:hidden;border:1px solid var(--console-line);
+    }
+    .codeblock .chead{
+      display:flex;align-items:center;justify-content:space-between;padding:.6rem 1rem;
+      border-bottom:1px solid var(--console-line);font-family:var(--mono);font-size:.68rem;
+      letter-spacing:.06em;color:var(--console-dim);text-transform:uppercase;
+    }
+    .copybtn{
+      background:none;border:1px solid var(--console-line);color:var(--console-dim);
+      font-family:var(--mono);font-size:.66rem;padding:.3rem .6rem;border-radius:5px;cursor:pointer;
+    }
+    .copybtn:hover{color:var(--coral-soft);border-color:var(--coral-soft);}
+    .codeblock pre{margin:0;padding:1.1rem 1.2rem;overflow-x:auto;font-family:var(--mono);font-size:.82rem;line-height:1.6;}
+
+    .factbox{
+      display:flex;gap:.9rem;padding:1.4rem 0;margin:0 0 2.2rem;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);
+    }
+    .factbox .icon{font-family:var(--mono);color:var(--coral);font-size:1.1rem;}
+
+    /* checklist */
+    .week-card{
+      border:1px solid var(--paper-line);border-radius:8px;margin:1.6rem 0;overflow:hidden;background:var(--paper);
+    }
+    .week-head{
+      display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1rem 1.3rem;
+      background:var(--paper-dim);
+    }
+    .week-head h4{margin:0;font-style:normal;font-family:var(--serif-display);font-size:1.05rem;}
+    .week-progress-wrap{display:flex;align-items:center;gap:.6rem;font-family:var(--mono);font-size:.7rem;color:var(--ink-soft);}
+    .week-bar{width:64px;height:5px;background:var(--paper-line);border-radius:3px;overflow:hidden;}
+    .week-bar i{display:block;height:100%;background:var(--moss);width:0%;transition:width .25s ease;}
+    .task-row{
+      display:flex;gap:.8rem;align-items:flex-start;padding:.75rem 1.3rem;border-top:1px solid var(--paper-line);
+    }
+    .task-row label{display:flex;gap:.8rem;align-items:flex-start;cursor:pointer;width:100%;}
+    .task-row input[type=checkbox]{
+      appearance:none;width:18px;height:18px;border:1.5px solid var(--ink-soft);border-radius:4px;
+      margin-top:.2rem;flex-shrink:0;cursor:pointer;position:relative;background:var(--paper);
+    }
+    .task-row input[type=checkbox]:checked{background:var(--moss);border-color:var(--moss);}
+    .task-row input[type=checkbox]:checked::after{
+      content:"";position:absolute;left:5px;top:1px;width:5px;height:9px;border:solid #fff;
+      border-width:0 2px 2px 0;transform:rotate(45deg);
+    }
+    .task-row .ttext{flex:1;}
+    .task-row .ttask{display:block;font-weight:600;}
+    .task-row .tdeliv{display:block;font-size:.85rem;color:var(--ink-soft);margin-top:.15rem;}
+    .task-row.done .ttask{text-decoration:line-through;color:var(--ink-soft);}
+    .overall-progress{
+      display:flex;align-items:center;gap:1rem;margin:1.6rem 0 2.2rem;padding:1rem 1.3rem;
+      background:var(--paper-dim);border-radius:8px;border:1px solid var(--paper-line);
+    }
+    .overall-bar{flex:1;height:8px;background:var(--paper-line);border-radius:4px;overflow:hidden;}
+    .overall-bar i{display:block;height:100%;width:0%;background:linear-gradient(90deg,var(--coral),var(--amber));transition:width .3s ease;}
+    .overall-progress .opct{font-family:var(--mono);font-size:.85rem;min-width:3em;text-align:right;}
+    .resetbtn{
+      font-family:var(--mono);font-size:.7rem;background:none;border:1px solid var(--paper-line);
+      color:var(--ink-soft);padding:.35rem .7rem;border-radius:5px;cursor:pointer;margin-top:.8rem;
+    }
+    .resetbtn:hover{border-color:var(--coral);color:var(--coral);}
+
+    /* idea matrix */
+    .matrix{border:1px solid var(--paper-line);border-radius:8px;overflow:hidden;margin:1.8rem 0 2.4rem;}
+    .matrix-row{display:flex;align-items:center;gap:1rem;padding:.85rem 1.3rem;border-top:1px solid var(--paper-line);}
+    .matrix-row:first-child{border-top:none;}
+    .matrix-row .mlabel{flex:1;}
+    .matrix-row .mlabel b{display:block;font-size:.95rem;}
+    .matrix-row .mlabel span{font-family:var(--mono);font-size:.66rem;color:var(--coral);letter-spacing:.05em;text-transform:uppercase;}
+    .matrix-row input[type=range]{width:120px;accent-color:var(--coral);}
+    .matrix-row .mval{font-family:var(--mono);width:1.4em;text-align:center;}
+    .matrix-foot{
+      display:flex;align-items:center;justify-content:space-between;padding:1rem 1.3rem;background:var(--paper-dim);
+      font-family:var(--mono);font-size:.85rem;
+    }
+    .matrix-foot .verdict{padding:.25rem .6rem;border-radius:4px;font-size:.7rem;letter-spacing:.04em;text-transform:uppercase;}
+    .verdict.go{background:var(--moss-soft);color:var(--moss);}
+    .verdict.wait{background:#F3E2C5;color:var(--amber);}
+
+    .refs{font-size:.92rem;}
+    .refs li{margin-bottom:.85rem;padding-left:.2rem;}
+    .refs .num{font-family:var(--mono);color:var(--coral);margin-right:.4rem;}
+
+    footer.colophon{
+      max-width:700px;margin:0 auto;padding:0 2.2rem 6rem;font-family:var(--mono);font-size:.78rem;
+      color:var(--ink-soft);line-height:1.7;
+    }
+    footer.colophon a{color:var(--ink-soft);}
+    .top-btn{
+      position:fixed;bottom:1.6rem;right:1.6rem;width:44px;height:44px;border-radius:50%;
+      background:var(--console);color:var(--console-text);border:1px solid var(--console-line);
+      display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:200;
+      box-shadow:var(--shadow);opacity:0;pointer-events:none;transition:opacity var(--speed);
+    }
+    .top-btn.show{opacity:1;pointer-events:auto;}
+
+    .cover{padding-top:2rem;}
+    .cover .markline{font-family:var(--mono);font-size:.78rem;letter-spacing:.18em;color:var(--coral);text-transform:uppercase;margin-bottom:1.4rem;}
+    .cover h1{font-size:3.1rem;line-height:1.06;margin:0 0 .5rem;}
+    .cover h1 em{color:var(--coral);font-style:italic;}
+    .cover .subtitle{font-size:1.25rem;color:var(--ink-soft);font-style:italic;font-family:var(--serif-display);margin:0 0 2.2rem;}
+    .cover .bymeta{font-family:var(--mono);font-size:.8rem;color:var(--ink-soft);display:flex;flex-wrap:wrap;gap:.4rem 1.4rem;border-top:1px solid var(--rule);padding-top:1.2rem;}
+    @media (max-width:560px){.cover h1{font-size:2.2rem;}}
+
+    .epigraph{text-align:center;padding:3rem 0 4rem;}
+    .epigraph .qmark{font-family:var(--serif-display);font-size:4.5rem;color:var(--coral-soft);line-height:1;}
+    .epigraph p{font-family:var(--serif-display);font-style:italic;font-size:1.5rem;line-height:1.4;max-width:560px;margin:0 auto 1rem;}
+    .epigraph cite{font-family:var(--mono);font-size:.78rem;color:var(--ink-soft);font-style:normal;}
+
+    .contents-grid{display:grid;gap:1.6rem;margin:2rem 0;}
+    .contents-part{border-top:1px solid var(--rule);padding-top:1rem;}
+    .contents-part .pname{font-family:var(--mono);font-size:.72rem;letter-spacing:.1em;color:var(--coral);text-transform:uppercase;margin-bottom:.6rem;}
+    .contents-part ul{list-style:none;margin:0;padding:0;}
+    .contents-part li{display:flex;justify-content:space-between;padding:.3rem 0;font-size:.96rem;}
+    .contents-part li a{color:var(--ink);text-decoration:none;}
+    .contents-part li a:hover{color:var(--coral);}
+    .contents-part li .pg{font-family:var(--mono);color:var(--ink-soft);font-size:.8rem;}
+
+    @media print{
+      .sidebar,#mobilebar,#progress,.top-btn,#scrim,.toolbar{display:none !important;}
+      .main{margin-left:0;}
+      body{font-size:12pt;background:#fff;color:#000;}
+      .callout,.codeblock,table{break-inside:avoid;}
+    }
+</style>
+</head>
+<body>
+  <a class="skip-link" href="#maincontent">Skip to content</a>
+  <div id="progress"></div>
+
+  <header id="mobilebar">
+    <button id="menubtn" aria-label="Open chapter list" aria-expanded="false"><span></span></button>
+    <span class="cur" id="mobilecur">Built for Humans</span>
+  </header>
+  <div id="scrim"></div>
+
+  <div class="layout">
+    <aside class="sidebar" id="sidebar" aria-label="Book navigation">
+      <div class="brand">
+        <p class="mark">Field Guide · First Edition</p>
+        <h1>Built for Humans</h1>
+        <p>Why the founders who win Y Combinator build for people, not portfolios.</p>
+      </div>
+      <div class="toolbar">
+        <button class="toolbtn" id="modebtn"><span class="lbl">Dark page</span></button>
+        <button class="toolbtn" id="sizebtn"><span class="lbl">Type M</span></button>
+        <button class="toolbtn" id="printbtn" onclick="window.print()"><span class="lbl">Print</span></button>
+      </div>
+      <nav class="toc" aria-label="Table of contents">
+        <a class="front-link" href="#cover" style="display:flex;padding:.4rem 1.5rem;color:var(--console-text);text-decoration:none;font-size:.86rem;">Cover</a>
+        <a class="front-link" href="#license" style="display:flex;padding:.4rem 1.5rem;color:var(--console-text);text-decoration:none;font-size:.86rem;">License</a>
+        <a class="front-link" href="#epigraph" style="display:flex;padding:.4rem 1.5rem;color:var(--console-text);text-decoration:none;font-size:.86rem;">Epigraph</a>
+        <a class="front-link" href="#contents" style="display:flex;padding:.4rem 1.5rem;color:var(--console-text);text-decoration:none;font-size:.86rem;">Contents</a>
+        <a class="chap" href="#preface"><span class="num">—</span><span class="ttl">Preface: A Confession</span><span class="time"></span></a>
+
+        <p class="group-label">Part I · The Mindset</p>
+        <a class="chap" href="#ch1"><span class="num">01</span><span class="ttl">The Humility Imperative</span><span class="time"></span></a>
+        <a class="chap" href="#ch2"><span class="num">02</span><span class="ttl">What Y Combinator Actually Funds</span><span class="time"></span></a>
+        <a class="chap" href="#ch3"><span class="num">03</span><span class="ttl">The AI-Native Distinction</span><span class="time"></span></a>
+
+        <p class="group-label">Part II · The Problem</p>
+        <a class="chap" href="#ch4"><span class="num">04</span><span class="ttl">Finding a Problem Worth Solving</span><span class="time"></span></a>
+        <a class="chap" href="#ch5"><span class="num">05</span><span class="ttl">Customer Discovery for Builders</span><span class="time"></span></a>
+        <a class="chap" href="#ch6"><span class="num">06</span><span class="ttl">The Problem Thesis</span><span class="time"></span></a>
+
+        <p class="group-label">Part III · The Build</p>
+        <a class="chap" href="#ch7"><span class="num">07</span><span class="ttl">The Multi-Agent Workforce</span><span class="time"></span></a>
+        <a class="chap" href="#ch8"><span class="num">08</span><span class="ttl">Architecture for Speed</span><span class="time"></span></a>
+        <a class="chap" href="#ch9"><span class="num">09</span><span class="ttl">From Code to Customers</span><span class="time"></span></a>
+
+        <p class="group-label">Part IV · The Pitch</p>
+        <a class="chap" href="#ch10"><span class="num">10</span><span class="ttl">The Y Combinator Application</span><span class="time"></span></a>
+        <a class="chap" href="#ch11"><span class="num">11</span><span class="ttl">The Interview and Beyond</span><span class="time"></span></a>
+
+        <p class="group-label">Part V · The Reality</p>
+        <a class="chap" href="#ch12"><span class="num">12</span><span class="ttl">The First Hundred Days</span><span class="time"></span></a>
+        <a class="chap" href="#ch13"><span class="num">13</span><span class="ttl">The Founder's Discipline</span><span class="time"></span></a>
+
+        <p class="group-label">Appendices</p>
+        <a class="chap" href="#appendix-a"><span class="num">A</span><span class="ttl">Six-Week Execution Checklist</span><span class="time"></span></a>
+        <a class="chap" href="#appendix-b"><span class="num">B</span><span class="ttl">MAS Prompt Library</span><span class="time"></span></a>
+        <a class="chap" href="#appendix-c"><span class="num">C</span><span class="ttl">YC Application Field Reference</span><span class="time"></span></a>
+        <a class="chap" href="#appendix-d"><span class="num">D</span><span class="ttl">Idea Evaluation Matrix</span><span class="time"></span></a>
+
+        <p class="group-label">&nbsp;</p>
+        <a class="chap" href="#references"><span class="num">—</span><span class="ttl">References</span><span class="time"></span></a>
+      </nav>
+      <footer>
+        Sreekesari Vangeepuram<br>
+        <a href="mailto:builtforhumans@proton.me">builtforhumans@proton.me</a><br>
+        CC BY-NC-SA 4.0
+      </footer>
+    </aside>
+
+    <main class="main" id="maincontent">
+      <div class="reading-col">
+
+        <section class="cover" id="cover">
+          <p class="markline">The AI-Native Founder's Guide</p>
+          <h1>Built <em>for</em> Humans</h1>
+          <p class="subtitle">Why the Founders Who Win Y Combinator Build for People, Not Portfolios</p>
+          <p class="bymeta">
+            <span>Sreekesari Vangeepuram</span>
+            <span>A Field Guide for Any YC Cohort</span>
+            <span>builtforhumans@proton.me</span>
+            <span>First Edition</span>
+          </p>
+        </section>
+
+        <hr class="div">
+
+        <section id="license">
+          <p class="part-kicker">License</p>
+          <h2 class="chapter-title" style="font-size:1.6rem;">CC BY-NC-SA 4.0</h2>
+          <p>This work is licensed under the Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License. You are free to share and adapt this material for non-commercial purposes, provided you give appropriate credit and distribute any derivative works under the same license terms.</p>
+          <p>For commercial licensing inquiries, please contact the author at <a href="mailto:builtforhumans@proton.me">builtforhumans@proton.me</a>, or read the full license at <a href="https://creativecommons.org/licenses/by-nc-sa/4.0" target="_blank" rel="noopener">creativecommons.org/licenses/by-nc-sa/4.0</a>.</p>
+        </section>
+
+        <hr class="div">
+
+        <section class="epigraph" id="epigraph">
+          <div class="qmark">&ldquo;</div>
+          <p>The very best startup ideas tend to have three things in common: they're something the founders themselves want, that they themselves can build, and that few others realize are worth doing.</p>
+          <cite>Paul Graham, Y Combinator Co-Founder (2005)</cite>
+        </section>
+
+        <hr class="div">
+
+        <section id="contents">
+          <p class="part-kicker">Overview</p>
+          <h2 class="chapter-title" style="font-size:1.8rem;">Contents</h2>
+          <div class="contents-grid">
+            <div class="contents-part">
+              <p class="pname">Part I — The Mindset</p>
+              <ul>
+                <li><a href="#ch1">1. The Humility Imperative</a><span class="pg">08</span></li>
+                <li><a href="#ch2">2. What Y Combinator Actually Funds</a><span class="pg">11</span></li>
+                <li><a href="#ch3">3. The AI-Native Distinction</a><span class="pg">14</span></li>
+              </ul>
+            </div>
+            <div class="contents-part">
+              <p class="pname">Part II — The Problem</p>
+              <ul>
+                <li><a href="#ch4">4. Finding a Problem Worth Solving</a><span class="pg">18</span></li>
+                <li><a href="#ch5">5. Customer Discovery for Builders</a><span class="pg">21</span></li>
+                <li><a href="#ch6">6. The Problem Thesis</a><span class="pg">24</span></li>
+              </ul>
+            </div>
+            <div class="contents-part">
+              <p class="pname">Part III — The Build</p>
+              <ul>
+                <li><a href="#ch7">7. The Multi-Agent Workforce</a><span class="pg">27</span></li>
+                <li><a href="#ch8">8. Architecture for Speed</a><span class="pg">31</span></li>
+                <li><a href="#ch9">9. From Code to Customers</a><span class="pg">34</span></li>
+              </ul>
+            </div>
+            <div class="contents-part">
+              <p class="pname">Part IV — The Pitch</p>
+              <ul>
+                <li><a href="#ch10">10. The Y Combinator Application</a><span class="pg">37</span></li>
+                <li><a href="#ch11">11. The Interview and Beyond</a><span class="pg">40</span></li>
+              </ul>
+            </div>
+            <div class="contents-part">
+              <p class="pname">Part V — The Reality</p>
+              <ul>
+                <li><a href="#ch12">12. The First Hundred Days</a><span class="pg">43</span></li>
+                <li><a href="#ch13">13. The Founder's Discipline</a><span class="pg">45</span></li>
+              </ul>
+            </div>
+            <div class="contents-part">
+              <p class="pname">Appendices</p>
+              <ul>
+                <li><a href="#appendix-a">A. The Six-Week Execution Checklist</a><span class="pg">48</span></li>
+                <li><a href="#appendix-b">B. MAS Prompt Library</a><span class="pg">49</span></li>
+                <li><a href="#appendix-c">C. YC Application Field Reference</a><span class="pg">50</span></li>
+                <li><a href="#appendix-d">D. Idea Evaluation Matrix</a><span class="pg">50</span></li>
+                <li><a href="#references">References</a><span class="pg">51</span></li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <hr class="div">
+
+        <section data-chapter id="preface">
+          <p class="part-kicker">Preface</p>
+          <h2 class="chapter-title">A Confession</h2>
+          <p class="chapter-meta"><span class="rtime"></span></p>
+
+          <p class="lede">Let me tell you about the founders who do not get into Y Combinator. They are brilliant. They have built large language model orchestration systems that would make a computer science professor pause. They can explain transformer architecture at a coffee shop. They have GitHub profiles that glow with contribution activity. And they have built products that precisely zero people want to use.</p>
+
+          <p>The rejection email stings because it feels unfair. They are talented. They did work hard. But talent and effort were never the point. Y Combinator partners are not evaluating intelligence. They are evaluating obsession with a specific human problem. And that obsession can only be demonstrated through contact with the humans who have the problem.</p>
+
+          <p>In every application cycle, Y Combinator receives over 10,000 applications and accepts roughly 1%. The vast majority of rejections happen at the written application stage, before any interview takes place. The applications that win have one thing in common: the founders talked to users before building. Everything else is secondary.</p>
+
+          <p>This is not a book about how to impress Y Combinator. It is a book about how to become the kind of founder YC cannot ignore: one who builds for humans first and lets the technology serve that mission. If you are reading this because you want to build an AI-native product and get into the most competitive startup accelerator in the world, the path is simpler than you think and harder than you want. It requires talking to strangers before you feel ready. Shipping things that are embarrassingly incomplete. Charging money before you feel worthy. And never, ever, falling in love with your own cleverness.</p>
+
+          <div class="callout">
+            <p class="ctitle">What this book assumes</p>
+            <p>This book assumes you have technical ability or access to it through AI agents. It assumes you are willing to work harder than you thought possible for six weeks. It assumes you care more about solving a real problem than about building a perfect product. If those assumptions are wrong, this book is not for you.</p>
+          </div>
+        </section>
+
+        <hr class="div">
+
+        <section id="part1">
+          <p class="part-kicker">Part I</p>
+          <h2 class="chapter-title" style="font-size:1.7rem;font-style:italic;">The Mindset — Before you build a single thing</h2>
+        </section>
+
+        <hr class="div">
+
+        <section data-chapter id="ch1">
+          <p class="part-kicker">Chapter 01 · Part I, The Mindset</p>
+          <h2 class="chapter-title">The Humility Imperative</h2>
+          <p class="chapter-meta"><span class="rtime"></span></p>
+
+          <blockquote class="pull">
+            <p>The very best startup ideas tend to have three things in common: they're something the founders themselves want, that they themselves can build, and that few others realize are worth doing.</p>
+            <cite>Paul Graham, How to Get Startup Ideas (2012)</cite>
+          </blockquote>
+
+          <p class="lede">The most common mistake technically gifted founders make is building a monument to their own intelligence rather than a bridge to someone else's problem. They treat their startup like a portfolio piece that demonstrates their capabilities. The product must use the latest framework, the most elegant architecture, the cutting-edge model. It must impress other engineers. It must be defensible at dinner parties. This mindset is fatal because it inverts the founding equation.</p>
+
+          <h3>The Portfolio Trap</h3>
+          <p>Every year, thousands of technically gifted engineers enter Y Combinator applications with what experienced founders call the portfolio mindset. They treat their startup like a piece of art that demonstrates their capabilities. The product must use the latest framework, the most elegant architecture, the cutting-edge model. It must impress other engineers. It must be defensible at dinner parties.</p>
+          <p>This mindset is fatal because it inverts the founding equation. You are no longer asking "What does the user need?" You are asking "What makes me look capable?" The product becomes a mirror reflecting your skills rather than a bridge solving someone's pain.</p>
+          <p>Paul Graham addressed this directly in his widely cited essay on startup ideas: the best ideas are ones where the founders themselves experienced the problem, can build the solution, and few others realize the opportunity exists.</p>
+          <p>Here is a practical test: if you cannot describe your product without mentioning the technology stack, you are building for your portfolio. If your pitch starts with "We use a multi-agent system with retrieval-augmented generation" instead of "We save medical billers six hours every day," you have already lost the attention of anyone who matters.</p>
+
+          <h3>The Three Questions Every User Asks</h3>
+          <p>When someone encounters your product, they are not evaluating your technical sophistication. They are asking three questions, usually subconsciously, always brutally:</p>
+          <p><strong>What is this?</strong> Not "What technology powers this?" but "What category of thing is this, and do I need it?" Research on consumer decision-making confirms that users form an impression within 50 milliseconds of viewing a webpage. You have three seconds. If your landing page requires understanding what a "multi-agent orchestration framework" is, you have already lost 99% of visitors.</p>
+          <p><strong>Will it work for me?</strong> Users are evaluating fit, not capability. They want to see their specific situation reflected in your product. A medical biller wants to see a medical billing interface, not a generic AI playground. Specificity creates trust faster than sophistication. This insight is supported by decades of work in user-centered design, where contextual appropriateness consistently outperforms feature richness in driving adoption.</p>
+          <p><strong>What happens if I trust you?</strong> Every new product requires a leap of faith. The user must believe that investing their time and data in your product will produce a meaningful return. Testimonials, specific metrics, and clear value propositions reduce this risk. Technical elegance does not. Rob Fitzpatrick captured this in <em>The Mom Test</em>, where he demonstrated that the only validation that matters is concrete commitment from users, not polite encouragement.</p>
+
+          <div class="callout">
+            <p class="ctitle">The humility check</p>
+            <p>Before writing your first line of code, write one sentence answering this: "My product helps [specific person] do [specific thing] without [specific pain]." If you cannot fill in all three blanks with concrete specificity, you are not ready to build. You are ready to learn.</p>
+          </div>
+
+          <h3>Building for People Means Letting Go</h3>
+          <p>The most difficult transition for technical founders is accepting that users do not care about the internal beauty of their systems. A user cannot see your elegant agent communication protocol. They cannot appreciate your sophisticated retrieval architecture. They can only see the interface, the output, and the result in their workflow.</p>
+          <p>This means making painful tradeoffs. It means shipping a frontend that embarrasses your design sensibilities because the user needs the feature on Tuesday. It means using a simpler model because the latency improvement matters more than the accuracy gain. It means hardcoding a solution for your first ten customers rather than building a generalizable system.</p>
+          <p>These tradeoffs feel like compromises. They are not. They are the definition of product judgment: the ability to correctly weigh what matters to the user against what matters to your engineering pride. As Steve Blank argued in <em>The Four Steps to the Epiphany</em>, startups succeed not through perfect execution of a plan, but through rapid learning cycles driven by customer feedback.</p>
+          <p>The founders who win are not the ones with the cleanest code. They are the ones who held their ego loosely enough to let the user reshape their vision. They built something imperfect for someone specific, then iterated based on real feedback rather than theoretical purity.</p>
+
+          <div class="callout story">
+            <p class="ctitle">The founder who learned</p>
+            <p>A founder spent three months building a perfectly architected AI system for automated code review. The system used seven different agents, a custom vector database, and a novel consensus algorithm. He applied to YC with impressive technical documentation and zero users. Rejected.</p>
+            <p>He spent the next week calling engineering managers. Not pitching. Just asking about their code review process. He discovered that the real pain was not in the review itself but in the assignment of reviewers: figuring out who should review what. He built a dead-simple matching tool in three days using a single GPT-4 call. No fancy architecture. No custom database. Just a form that took a pull request description and suggested reviewers based on past contributions.</p>
+            <p>It was ugly. It worked. Within two weeks, three teams were using it. He reapplied with user quotes and screenshots of Slack messages from happy engineers. Accepted.</p>
+            <p>The lesson: the elegant solution to the wrong problem is indistinguishable from the wrong solution.</p>
+          </div>
+        </section>
+
+        <hr class="div">
+        <section data-chapter id="ch2">
+          <p class="part-kicker">Chapter 02 · Part I, The Mindset</p>
+          <h2 class="chapter-title">What Y Combinator Actually Funds</h2>
+          <p class="chapter-meta"><span class="rtime"></span></p>
+
+          <blockquote class="pull">
+            <p>We would rather fund a team that builds a mediocre product in two weeks than a perfect product in six months.</p>
+            <cite>Y Combinator Partner Wisdom, Repeated Across Office Hours</cite>
+          </blockquote>
+
+          <p class="lede">Y Combinator's acceptance rate has been estimated at roughly 1% by multiple independent analyses, with some recent cohorts dipping as low as 0.6%. That means 994 out of every 1,000 applications are rejected. If you want to be among the few who get in, you need to understand what separates them from the rest. The answer, drawn from analyzing the composition of recent cohorts and the stated preferences of YC partners, is not what most applicants think.</p>
+
+          <figure class="stat-strip" aria-label="Key Y Combinator statistics">
+            <div class="stat"><span class="num" data-value="84" data-suffix="%">0%</span><span class="lbl">B2B companies funded</span></div>
+            <div class="stat"><span class="num" data-value="90" data-suffix="%">0%</span><span class="lbl">AI-native in S25 batch</span></div>
+            <div class="stat"><span class="num" data-value="1" data-suffix="%">0%</span><span class="lbl">Overall acceptance rate</span></div>
+            <div class="stat"><span class="num">$500K</span><span class="lbl">YC standard deal</span></div>
+          </figure>
+
+          <h3>The Four Patterns of Accepted Founders</h3>
+          <p>After studying published data on recent YC cohorts and partner commentary, four patterns emerge among accepted applications. None of them are about having the best idea or the most impressive technical approach.</p>
+
+          <h4>Pattern One: Verified Customer Pain</h4>
+          <p>Every accepted founder could point to specific people who had experienced the problem they were solving. Not hypothetically. Not "I think people struggle with this." They had names, phone numbers, and quotes. As Michael Seibel, Managing Director at Y Combinator, has emphasized repeatedly, the founders who succeed are those who can explain what they are building in two sentences plus a specific example.</p>
+          <p>This specificity is not accidental. It is the result of deliberate customer discovery work before building. The founders who get in treat user conversations as the primary input to their product, not as a validation step after they have already decided what to build. YC partner Geoff Ralston has noted that growth is the result of a great product, not the precursor.</p>
+
+          <h4>Pattern Two: Demonstrated Execution Speed</h4>
+          <p>YC partners have consistently emphasized that execution speed reveals founder quality more reliably than any other signal. Fast builders are decisive, pragmatic, and user-focused. Slow builders are perfectionists who optimize the wrong things. Paul Graham's landmark essay <em>Do Things That Don't Scale</em> remains one of the most cited pieces of startup advice precisely because it captures this ethos: the founders who win get their hands dirty, recruit users manually, and iterate rapidly based on real feedback.</p>
+
+          <h4>Pattern Three: Domain Depth, Not Domain Breadth</h4>
+          <p>The funded startups of recent cohorts share a critical characteristic: they went deep into specific verticals rather than building horizontal platforms. Analysis of the Summer 2025 batch found that approximately 84% of funded companies were B2B, and nearly 90% explicitly incorporated AI into their core offering. A startup that automates FDA compliance document drafting for pharmaceutical companies wins against a startup that "uses AI to automate document generation for businesses." The narrow framing signals expertise, focus, and the ability to win a specific market before expanding.</p>
+
+          <h4>Pattern Four: The Surprising Thing</h4>
+          <p>YC's application asks, "Please tell us about something surprising or amusing that one of you has discovered." Most applicants skip this or treat it as an afterthought. The founders who get in use this question to demonstrate resourcefulness, unconventional thinking, or evidence that they ship against odds. Sam Altman, in his Stanford lecture series on startups, noted that the best founders have an "I always figure it out" mentality combined with the ability to attract people to their vision.</p>
+
+          <h3>The Y Combinator Standard Deal</h3>
+          <p>In January 2022, Y Combinator revised its standard deal to $500,000 total investment per company: $125,000 for 7% equity plus an additional $375,000 on an uncapped SAFE with Most Favored Nation provisions. This structure gives founders immediate capital to focus on building while deferring valuation negotiations until the next funding round. As Jared Heyman, a prolific YC ecosystem investor, noted, the deal allows new startups to either destress fundraising or focus on growth to create FOMO on Demo Day.</p>
+          <p>Beyond the capital, YC provides access to a network of over 5,000 funded companies and 100+ unicorns, weekly office hours with partners who have collectively seen tens of thousands of startups, and the concentrated pressure of Demo Day preparation. The money is helpful but secondary. The network, the accountability, and the feedback density are what create outcomes.</p>
+
+          <h3>The Myth of the Perfect Idea</h3>
+          <p>A misconception that destroys more applications than any other is the belief that YC is looking for a perfect, original idea. They are not. They are looking for founders who can take a good idea and execute it with extraordinary speed and user focus. Multiple companies in every batch solve similar problems. YC has funded dozens of billing automation startups, countless developer tools, and innumerable AI infrastructure companies. The idea is not the differentiator. The team is.</p>
+          <p>This is liberating. You do not need to invent a new category. You need to find a painful problem in a proven market and solve it better than existing solutions because you understand your users more deeply. Michael Seibel has observed that it's better to have 10 people loving your product than 1,000 people kind of liking it. Your competitive advantage is not novelty. It is execution velocity rooted in customer intimacy.</p>
+
+          <div class="callout">
+            <p class="ctitle">The idea does not matter (that much)</p>
+            <p>YC has funded founders who pivoted multiple times during the batch. The initial idea was just the entry ticket. What mattered was the team's ability to learn, ship, and adapt. Do not spend weeks searching for the perfect idea. Spend days validating a good idea, then start building.</p>
+          </div>
+        </section>
+
+        <hr class="div">
+
+        <section data-chapter id="ch3">
+          <p class="part-kicker">Chapter 03 · Part I, The Mindset</p>
+          <h2 class="chapter-title">The AI-Native Distinction</h2>
+          <p class="chapter-meta"><span class="rtime"></span></p>
+
+          <blockquote class="pull">
+            <p>AI-native does not mean "using AI." It means the product could not exist without AI. The technology is not a feature. It is the foundation.</p>
+            <cite>Industry Consensus, 2024&ndash;2025</cite>
+          </blockquote>
+
+          <p class="lede">There is a profound difference between a product that uses AI and a product that is AI-native. Most applicants get this wrong, and it costs them their credibility with YC partners. Understanding the distinction is not academic. It determines your architecture, your go-to-market, your competitive moat, and how you describe yourself in your application.</p>
+
+          <h3>AI-Adjacent versus AI-Native</h3>
+          <p>An AI-adjacent product takes an existing workflow and adds AI as a feature. A traditional project management tool that adds an "AI assistant" to help write task descriptions is AI-adjacent. Remove the AI, and the product still works. The AI is a convenience layer, not a structural element.</p>
+          <p>An AI-native product is built around the assumption that AI performs work that humans previously did. An AI agent that autonomously handles insurance claim follow-up calls is AI-native. Without the AI, there is no product. The AI is not a feature. It is the worker.</p>
+
+          <div class="tablewrap">
+            <table>
+              <caption>Table 1 &middot; AI-Adjacent versus AI-Native</caption>
+              <thead><tr><th>Dimension</th><th>AI-Adjacent</th><th>AI-Native</th></tr></thead>
+              <tbody>
+                <tr><td>Core value proposition</td><td>&ldquo;We help you do X faster&rdquo;</td><td>&ldquo;We do X for you completely&rdquo;</td></tr>
+                <tr><td>User relationship</td><td>Tool-assisted human work</td><td>Human-supervised agent work</td></tr>
+                <tr><td>Pricing model</td><td>Per-seat SaaS ($20&ndash;50/user)</td><td>Per-outcome or value-based ($500&ndash;5,000)</td></tr>
+                <tr><td>Competitive defense</td><td>Feature parity race</td><td>Workflow integration + data moat</td></tr>
+                <tr><td>YC framing</td><td>&ldquo;AI-powered [category]&rdquo;</td><td>&ldquo;AI [job title] for [industry]&rdquo;</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3>The Worker, Not the Wrench</h3>
+          <p>The most powerful mental model for AI-native products is this: your AI is not a tool that helps the user work. It is a worker that does the work, with the user supervising. This reframing changes your entire product design.</p>
+          <p>When your AI is a worker, the interface changes from "dashboard with AI features" to "supervisor cockpit." The user is not clicking through features. They are reviewing work, setting parameters, and intervening when the agent needs help. The product becomes a management layer for an autonomous workforce. Research on LLM-based multi-agent systems for software engineering confirms that hierarchical architectures with specialized agents significantly outperform monolithic approaches on complex tasks.</p>
+          <p>This is why the multi-agent systems approach described later in this book is so powerful. You are not building a product with AI. You are building a system of AI workers managed by a human supervisor. The product is the coordination layer, not the execution layer. The ALMAS framework at JPMorgan demonstrated this practically by developing specialized agents for sprint planning, code generation, code review, and augmentation, successfully building a Python Streamlit application through autonomous multi-agent collaboration.</p>
+
+          <div class="callout">
+            <p class="ctitle">The worker framing in practice</p>
+            <p>Compare two pitches for the same underlying technology:</p>
+            <p><strong>Tool framing:</strong> "Our AI-powered platform helps customer support teams draft responses faster using natural language generation."</p>
+            <p><strong>Worker framing:</strong> "Our AI agent handles tier-one support tickets autonomously. It researches the issue, drafts the response, and sends it. Your human agents only review escalations. One agent now does the work of ten."</p>
+            <p>The second framing communicates a 10x improvement, not a 20% efficiency gain. It positions the product as replacing labor, not augmenting it. This is the difference between a $50/month tool and a $5,000/month worker replacement.</p>
+          </div>
+
+          <h3>Why AI-Native Wins with YC</h3>
+          <p>In the current application cycle, AI-native startups have a structural advantage with YC for several reasons. First, the timing aligns with YC's stated thesis. The organization has been explicit about its interest in AI and agentic systems. Second, AI-native companies can demonstrate traction faster because the value proposition is extreme: complete automation beats incremental improvement in user willingness-to-pay. Third, the market is expanding rapidly as enterprises realize that AI agents can replace entire job functions, not just assist them.</p>
+          <p>But this advantage is temporal. As AI capabilities commoditize, the distinction between AI-adjacent and AI-native will blur. The founders who win will be those who used this window to build data moats and workflow integrations that survive the technology transition. The AI is your entry ticket. Your understanding of the user's problem is your staying power.</p>
+
+          <div class="callout">
+            <p class="ctitle">The commoditization clock</p>
+            <p>Every AI-native founder must answer this question: "What happens when the next foundation model can do what my custom agents do?" If your answer is "my users will just use the new model directly," you have no business. If your answer is "my workflow integration, domain data, and user-specific configurations make switching impossibly painful," you have a defensible company. Build the second answer.</p>
+          </div>
+        </section>
+
+        <hr class="div">
+
+        <section id="part2">
+          <p class="part-kicker">Part II</p>
+          <h2 class="chapter-title" style="font-size:1.7rem;font-style:italic;">The Problem — Finding something worth your life</h2>
+        </section>
+
+        <hr class="div">
+        <section data-chapter id="ch4">
+          <p class="part-kicker">Chapter 04 · Part II, The Problem</p>
+          <h2 class="chapter-title">Finding a Problem Worth Solving</h2>
+          <p class="chapter-meta"><span class="rtime"></span></p>
+
+          <blockquote class="pull">
+            <p>The best problems are the ones that make people angry. Not annoyed. Angry. Because anger means they have tried to solve it and failed.</p>
+            <cite>Customer Discovery Heuristic, Repeated in YC Office Hours</cite>
+          </blockquote>
+
+          <p class="lede">The single highest-leverage decision you will make as a founder is which problem to solve. Everything else, your technology, your team, your funding, your eventual success or failure, flows from this choice. Yet most founders spend less time selecting their problem than they spend selecting their tech stack. This chapter is about correcting that imbalance.</p>
+
+          <h3>The Problem Filter</h3>
+          <p>Not every problem is a startup. Not every startup is a YC company. To find the intersection of "problem worth solving" and "problem YC will fund," apply these filters in order. Do not proceed to the next filter until the current one is satisfied.</p>
+
+          <h4>Filter One: The Problem Is Experienced Daily</h4>
+          <p>The best problems are frequent. A problem that occurs once per quarter does not create enough urgency for users to adopt a new solution, no matter how painful the quarterly event. Daily problems create daily habits. Daily habits create retention. Retention creates the metrics YC wants to see. Steve Blank, in his foundational work on customer development, emphasized that founders must get out of the building and validate assumptions through direct customer contact before writing code.</p>
+
+          <h4>Filter Two: The Problem Costs Real Money</h4>
+          <p>There are two ways a problem costs money: directly, through waste or inefficiency, or indirectly, through opportunity cost. Direct costs are easier to quantify and sell against. "This problem costs your company $10,000 per month in wasted labor" is a much stronger pitch than "this problem makes your employees unhappy." During customer discovery, always ask about cost. "If you had to put a dollar figure on this problem, what would it be?" The answer does not need to be precise. An order-of-magnitude estimate is enough.</p>
+
+          <h4>Filter Three: Current Solutions Are Hated</h4>
+          <p>The ideal problem already has attempted solutions that users actively dislike. This means the market is validated (people are paying for solutions) but the incumbent is vulnerable (people are unhappy). Your job is not to convince people to spend money solving a new category of problem. Your job is to convince them that your solution is dramatically better than what they suffer through today. As Paul Graham noted, great startup ideas are usually ones that seem bad to most people because the obvious ideas are already taken.</p>
+
+          <h4>Filter Four: You Can Solve It in Two Weeks</h4>
+          <p>This is the YC constraint. You need a problem whose core solution can be built and demonstrated in two weeks. Not the complete product. Not the enterprise version. The core value proposition. If the minimum viable solution requires six months of development, the problem is too large for the YC timeline. You can always expand after proving the core value. But you cannot expand if you never ship because the first version was too ambitious.</p>
+
+          <h4>Filter Five: You Have Access to Users</h4>
+          <p>The best problem in the world is worthless if you cannot reach the people who have it. Before committing to a problem, verify that you can identify and contact at least fifty potential users. If your target user is "enterprise CFOs at Fortune 500 companies" and you know zero CFOs, you have an access problem. If your target user is "freelance graphic designers on Upwork" and you can message fifty of them today, you have a channel.</p>
+
+          <div class="callout">
+            <p class="ctitle">The five-filter scorecard</p>
+            <p>For each problem you are considering, rate it 1&ndash;5 on each filter. Minimum viable score: 20/25. If a problem scores below 4 on any single filter, eliminate it regardless of the total score. A problem with no accessible users is not a startup. It is a fantasy.</p>
+          </div>
+
+          <h3>B2B versus B2C: The Data Speaks</h3>
+          <p>Based on analysis of recent YC cohorts, approximately 84% of funded startups are B2B. This is not an accident. B2B startups have structural advantages that make them more fundable:</p>
+          <p><strong>B2B buyers are trained to pay for value.</strong> A business will spend $500 per month to save an employee ten hours. A consumer will not spend $5 per month for anything that requires explanation. The B2B sales cycle, while longer, produces higher lifetime values and more predictable revenue.</p>
+          <p><strong>B2B problems are specific and measurable.</strong> "Reduce customer churn by 15%" is a concrete value proposition. "Help people discover music they will love" is not. Specificity makes selling easier, pricing clearer, and success demonstrable.</p>
+          <p><strong>B2B growth compounds through relationships.</strong> One satisfied business customer can introduce you to their entire network. One enterprise deal can validate your product for an entire industry. B2C growth requires mass marketing. B2B growth requires credibility.</p>
+          <p>This does not mean B2C is impossible. It means B2C requires a different playbook, different metrics, and a higher tolerance for ambiguity. For your first YC application, B2B gives you the highest probability of success.</p>
+        </section>
+
+        <hr class="div">
+
+        <section data-chapter id="ch5">
+          <p class="part-kicker">Chapter 05 · Part II, The Problem</p>
+          <h2 class="chapter-title">Customer Discovery for Builders</h2>
+          <p class="chapter-meta"><span class="rtime"></span></p>
+
+          <blockquote class="pull">
+            <p>People stop lying when you ask them for money.</p>
+            <cite>Rob Fitzpatrick, The Mom Test (2013)</cite>
+          </blockquote>
+
+          <p class="lede">Customer discovery is not market research. Market research is reading reports and analyzing trends. Customer discovery is having conversations with real people about their real problems. It is uncomfortable, time-consuming, and absolutely non-negotiable. This chapter is a field guide to doing it right, grounded in the methodology developed by Steve Blank and refined by Rob Fitzpatrick.</p>
+
+          <h3>The Discovery Mindset</h3>
+          <p>The most common mistake founders make in customer discovery is treating conversations as sales opportunities. They pitch their idea, gauge reactions, and count positive responses as validation. This approach produces false positives because people are polite. They will tell you your idea is "interesting" right up until you ask them to pay for it.</p>
+          <p>The correct mindset is anthropological, not commercial. You are not selling. You are studying. Your goal is to understand the problem so deeply that you can describe it better than the person experiencing it. Rob Fitzpatrick termed this approach "The Mom Test" because it focuses on asking questions that even your mother cannot lie about: questions about her life and behavior, not about your idea.</p>
+
+          <h3>The Discovery Script</h3>
+          <p>Here is a script framework adapted from Fitzpatrick's methodology and refined through practice:</p>
+          <p><strong>Opening (establish context):</strong> "I am researching how [type of professional] handles [workflow area]. I am not selling anything. I am trying to understand if [specific problem] is actually a significant issue or if I am imagining it. Can you tell me about the last time you dealt with this?"</p>
+          <p><strong>Probing (go deep):</strong> "How often does this happen? Walk me through exactly what you do step by step. How long does that take? What happens if it goes wrong? Who else is affected?"</p>
+          <p><strong>Context (understand the ecosystem):</strong> "What tools do you use for this today? How did you choose them? What do you wish they did differently? If you could wave a magic wand, what would change about this process?"</p>
+          <p><strong>Closing (test willingness to pay):</strong> "If I built something that [specific outcome] in [specific time], would you be open to trying it? What would you need to see to pay $[price]/month for it?"</p>
+          <p>The closing question is the most important. It separates real problems from phantom problems. Fitzpatrick observed that a person who talks enthusiastically about a problem but never takes steps to solve it is a complainer, not a customer.</p>
+
+          <div class="callout">
+            <p class="ctitle">The validation threshold</p>
+            <p>You need a minimum of twenty customer conversations to validate a problem. Not five. Not ten. Twenty. Among those twenty, at least five should express genuine frustration (not polite interest) and at least three should be willing to pay or pilot a solution before it exists. If you cannot find these numbers, your problem is not painful enough.</p>
+          </div>
+
+          <h3>Finding People to Talk To</h3>
+          <p>The most common excuse for skipping customer discovery is "I don't know anyone in that industry." This is almost never true. It is a discomfort avoidance mechanism. Here are practical channels that work:</p>
+          <p><strong>LinkedIn direct outreach.</strong> Send ten personalized connection requests per day. Reference something specific from their profile. "I saw you manage billing at Regional Medical. I am researching how billing teams handle Medicare claim follow-ups. Would you have ten minutes for a quick call? No pitch, just learning." Expect a 10&ndash;20% response rate. Send fifty requests. Get five conversations.</p>
+          <p><strong>Industry communities.</strong> Every industry has online communities. Subreddits, Discord servers, Facebook groups, Slack workspaces. Join them. Participate genuinely for a week. Then ask questions. The responses will be more honest than any formal interview because they are public and peer-validated.</p>
+          <p><strong>Your existing network.</strong> The "friend of a friend" chain is more powerful than you think. Post on your personal social media: "I am researching [problem area]. Do you know anyone who works in [industry]? I would love to ask them ten minutes of questions."</p>
+
+          <h3>Documenting What You Learn</h3>
+          <p>Every conversation must be documented immediately after it ends. Memory degrades within hours. Your notes should include verbatim quotes, specific numbers, current workflow descriptions, current tools and costs, and willingness signals. Did they ask when your solution would be ready? Did they offer to introduce you to colleagues? Did they express frustration with current solutions?</p>
+          <p>After twenty conversations, compile a one-page problem thesis. This document becomes the foundation of your YC application, your investor pitch, and your product roadmap. It is the most important document you will create.</p>
+        </section>
+
+        <hr class="div">
+
+        <section data-chapter id="ch6">
+          <p class="part-kicker">Chapter 06 · Part II, The Problem</p>
+          <h2 class="chapter-title">The Problem Thesis</h2>
+          <p class="chapter-meta"><span class="rtime"></span></p>
+
+          <blockquote class="pull">
+            <p>If you cannot explain the problem in one sentence that makes a stranger nod, you do not understand it well enough to build a solution.</p>
+            <cite>Startup Communication Principle, Repeated Across YC Office Hours</cite>
+          </blockquote>
+
+          <p class="lede">After twenty customer conversations, you will have pages of notes, dozens of quotes, and a head full of insights. The problem thesis distills all of this into a single document that drives every subsequent decision. It is your compass. When you are tempted to add a feature, the thesis tells you whether it serves the core problem. When you are writing your YC application, the thesis provides the evidence. When you are pitching investors, the thesis becomes your narrative foundation.</p>
+
+          <h3>The Thesis Structure</h3>
+          <p>A problem thesis is one page. Not two. One. The constraint forces clarity. Here is the structure:</p>
+
+          <h4>1. The Problem Statement (2&ndash;3 sentences)</h4>
+          <p>Describe the problem as experienced by a specific person in a specific context. Use the language your interview subjects used. Not your interpretation. Their words.</p>
+          <div class="callout story">
+            <p class="ctitle">Example</p>
+            <p>"Medical billing specialists at mid-size hospitals spend 4&ndash;6 hours every Monday manually following up on denied insurance claims. Each follow-up requires navigating a different payer portal, re-submitting documentation, and waiting on hold for 20&ndash;30 minutes per call. A single hospital billing department processes 200&ndash;400 denied claims weekly, and current software only tracks claims but does not handle the follow-up workflow."</p>
+          </div>
+
+          <h4>2. The Cost (quantified)</h4>
+          <p>Translate the problem into dollars, hours, or outcomes. Use numbers from your interviews.</p>
+          <div class="callout story">
+            <p class="ctitle">Example</p>
+            <p>"A 200-bed hospital employs 6 billing specialists at $55K/year each. Denied claim follow-up consumes 30% of their time, equivalent to $99K in annual labor cost per hospital. Nationally, denied claims cost healthcare providers $262 billion annually, with 63% of denials being recoverable through proper follow-up."</p>
+          </div>
+
+          <h4>3. Current Solutions (and why they fail)</h4>
+          <p>List what people use today and the specific gaps your interviews revealed.</p>
+          <div class="callout story">
+            <p class="ctitle">Example</p>
+            <p>"Existing solutions focus on claim submission and tracking but require manual follow-up. Billing teams use spreadsheets and shared email inboxes to manage the follow-up process. These tools fail because they do not automate the actual follow-up calls, portal submissions, and documentation resubmission."</p>
+          </div>
+
+          <h4>4. The Opportunity (market size)</h4>
+          <p>Bottom-up calculation based on your specific user and price point.</p>
+          <div class="callout story">
+            <p class="ctitle">Example</p>
+            <p>"6,129 hospitals in the US. Average spend on billing technology: $180K/year. Addressable market: $1.1B. Initial target: 200-bed hospitals (4,200 institutions). At $3,600/month per hospital: $181M serviceable market."</p>
+          </div>
+
+          <h4>5. Customer Validation Evidence</h4>
+          <p>Three direct quotes from interviews, with role and company type.</p>
+          <div class="callout story">
+            <p class="ctitle">Example</p>
+            <p>"'Monday mornings are hell. I have forty denied claims and I know I will only get through ten.' &mdash; Billing Specialist, 150-bed community hospital. 'We have tried three different systems. None of them handle the follow-up.' &mdash; Billing Manager, regional health system."</p>
+          </div>
+
+          <div class="callout">
+            <p class="ctitle">The thesis test</p>
+            <p>Show your problem thesis to someone who knows nothing about your industry. If they understand the problem, its cost, and why current solutions fail within sixty seconds, your thesis is clear. If they ask clarifying questions, revise. Clarity is not an aesthetic choice. It is a competitive advantage.</p>
+          </div>
+
+          <h3>From Thesis to Product Definition</h3>
+          <p>The thesis tells you what problem to solve. It does not tell you how to solve it. The next step is defining the minimum product that delivers the core value. This is where most founders overbuild.</p>
+          <p>Define your product by working backward from the desired outcome. What is the one thing your product must do to make a user say "this is worth paying for?" Not the ten things. The one thing. Everything else is a distraction for the first version. Write this definition in one sentence. Post it where you can see it while building. When you are tempted to add a feature, ask: "Does this serve the one sentence?" If not, add it to a future list and stay focused.</p>
+        </section>
+
+        <hr class="div">
+
+        <section id="part3">
+          <p class="part-kicker">Part III</p>
+          <h2 class="chapter-title" style="font-size:1.7rem;font-style:italic;">The Build — Shipping what matters, fast</h2>
+        </section>
+
+        <hr class="div">
+        <section data-chapter id="ch7">
+          <p class="part-kicker">Chapter 07 · Part III, The Build</p>
+          <h2 class="chapter-title">The Multi-Agent Workforce</h2>
+          <p class="chapter-meta"><span class="rtime"></span></p>
+
+          <blockquote class="pull">
+            <p>LLM-based multi-agent frameworks have great potential for automated software development, yet they suffer from misalignment between agents.</p>
+            <cite>RTADev, ACL Findings (2025)</cite>
+          </blockquote>
+
+          <p class="lede">This chapter is the technical core of the book. It describes how to build software using a multi-agent system (MAS) as your development workforce. This approach enables a solo founder or small team to achieve output velocities that would normally require three to four engineers. The goal is not to replace human judgment. It is to amplify human direction.</p>
+
+          <p>I want to be clear about what this approach costs. API calls are not free. Expect to spend $150&ndash;300 over a six-week build period on LLM inference. This is not zero cost, but it is approximately one hundred times cheaper than contracting a development team and approximately four hundred times cheaper than hiring a full-time engineer. The framing is not "free development." It is "radically cost-efficient development at extreme velocity."</p>
+
+          <h3>Why Multi-Agent Systems Work for Product Development</h3>
+          <p>A single large language model can write code. But software development is not just writing code. It is planning, implementing, reviewing, testing, debugging, and integrating. Each of these activities requires different skills, different contexts, and different evaluation criteria. A multi-agent system separates these concerns, creating specialized workers that collaborate under human supervision.</p>
+          <p>Research published in ACM Transactions on Software Engineering and Methodology confirms that LLM-based multi-agent systems significantly advance software engineering tasks through parallelization, specialization, and iterative refinement. The ALMAS framework at JPMorgan demonstrated this practically by developing specialized agents for sprint planning, code generation, code review, and augmentation, successfully building a Python Streamlit application through autonomous multi-agent collaboration.</p>
+          <p>More practically, the parallelization is what matters. While you are sleeping, your agents can be writing tests. While you are talking to customers, your agents can be refactoring code. While you are eating dinner, your agents can be resolving merge conflicts. The cumulative effect is compounding velocity that no solo human can match.</p>
+
+          <h3>The Architecture: Hierarchical Supervision</h3>
+          <p>The architecture follows four layers, each with distinct responsibilities. This is not theoretical. It is the architecture that has been used and refined through multiple product builds.</p>
+
+          <h4>Layer One: Orchestration</h4>
+          <p>The Orchestrator Agent receives high-level requirements from you and decomposes them into specific, assignable tasks. It maintains awareness of the project state, tracks dependencies between tasks, and routes work to the appropriate domain supervisor. The Orchestrator is the project manager, not the worker.</p>
+          <p>The Orchestrator's critical function is maintaining context across the project. When you say "add user authentication to the billing dashboard," the Orchestrator knows which files exist, which technologies are in use, and which other features might be affected. It translates your human intent into structured task definitions that worker agents can execute.</p>
+
+          <h4>Layer Two: Domain Supervisors</h4>
+          <p>Three domain supervisors manage specialized worker pools. The Frontend Supervisor manages all client-side code. The Backend Supervisor manages all server-side code. The QA Supervisor manages testing and quality assurance. Research by He, Treude, and Lo found that hierarchical supervision in multi-agent software engineering systems improves both output quality and coordination efficiency compared to flat agent architectures.</p>
+
+          <h4>Layer Three: Worker Agents</h4>
+          <p>Each supervisor dispatches tasks to specialized workers. The Frontend Supervisor sends component generation tasks to a UI Worker, API integration tasks to a Client Worker, and styling tasks to a CSS Worker. The Backend Supervisor sends endpoint design to an API Worker, database queries to a Data Worker, and business logic to a Logic Worker. This granularity matters because each worker maintains a focused context. A UI Worker knows React patterns, accessibility standards, and component design. It does not need to know about database indexing or API rate limiting.</p>
+
+          <h4>Layer Four: Tool Integration</h4>
+          <p>All agents interact with external tools through standardized interfaces. The Git Worker commits code, creates branches, and manages pull requests. The LLM Worker handles all model inference, managing context windows and token budgets. The Deploy Worker manages staging and production deployments. The Monitor Worker tracks errors and performance metrics.</p>
+
+          <h3>Agent Communication Protocol</h3>
+          <p>Agents communicate through structured messages, not free-form conversation. This prevents the confusion and hallucination that occur when agents try to interpret natural language from other agents. The RTADev framework demonstrated that real-time alignment mechanisms between agents significantly improve functional completeness in software development tasks, achieving higher success rates than baseline multi-agent approaches.</p>
+          <p>Every message contains: a unique identifier, sender and receiver addresses, a message type (task assignment, task result, review request, escalation), a structured task or result object, and relevant context references. This structure ensures that every agent knows exactly what is being asked, who is responsible, and what the acceptance criteria are.</p>
+
+          <h3>The Human-in-the-Loop Framework</h3>
+          <p>The most important architectural decision is where humans intervene. Too much human oversight and you lose the velocity advantage. Too little and agents ship broken code that destroys user trust. Five human gates are recommended: architecture decisions (human approval required), code review (every PR reviewed), deployment approval (staging automatic, production manual), feature completion (human verifies on staging), and escalation (when agent confidence drops below 80%).</p>
+          <p>Total daily human time: approximately 90 minutes. If you are spending more than this, your agent prompts or architecture needs refinement.</p>
+
+          <div class="callout">
+            <p class="ctitle">The temptation to micromanage</p>
+            <p>New MAS operators constantly check agent output, second-guess decisions, and intervene prematurely. Resist this. Set your gates, trust the system, and focus your freed time on customer conversations and product strategy. The whole point of agents is to give you that time.</p>
+          </div>
+
+          <h3>Harness Engineering: Why It Matters</h3>
+          <p>There is an important distinction in how you supervise your multi-agent system. The approach described throughout this book is harness engineering: you design the harness, define the rules, set the gates, and let the agents run within those constraints. You are not micromanaging each decision. You are architecting the system within which agents make thousands of decisions autonomously.</p>
+          <p>The harness is your competitive advantage. Two founders using the same LLM API with the same agent framework will produce radically different outputs based on the quality of their harness. The harness includes: your prompt engineering, your agent role definitions, your communication protocol, your quality gates, your error handling strategy, and your escalation rules. These are not default configurations. They are the product of iteration, debugging, and deep understanding of your specific build process.</p>
+          <p>Invest time in refining your harness. The first week of using a MAS should produce a detailed runbook: which prompts work, which fail, where agents get confused, and how you corrected them. This runbook is your intellectual property. It is why another founder cannot replicate your output speed simply by copying your tech stack.</p>
+
+          <h3>A Note on Loop Engineering</h3>
+          <p>You may encounter discussions of loop engineering in research literature and advanced multi-agent frameworks. Loop engineering refers to systems where agents run in continuous feedback loops, autonomously refining their output through dozens or hundreds of self-correcting iterations. While theoretically powerful, these systems consume enormous amounts of tokens. A single loop engineering task can burn through $50&ndash;100 in API costs, with no guarantee of convergence.</p>
+          <p>For early-stage founders working within a $150&ndash;300 six-week budget, loop engineering is not practical. The token consumption is simply too high for the uncertain payoff. The harness engineering approach described in this book uses single-pass execution with human review gates. It is less elegant than continuous self-improvement, but it ships code you can afford. When you have raised funding and have a larger inference budget, loop engineering becomes worth exploring. Until then, build the harness, ship the product, and talk to users.</p>
+        </section>
+
+        <hr class="div">
+
+        <section data-chapter id="ch8">
+          <p class="part-kicker">Chapter 08 · Part III, The Build</p>
+          <h2 class="chapter-title">Architecture for Speed</h2>
+          <p class="chapter-meta"><span class="rtime"></span></p>
+
+          <blockquote class="pull">
+            <p>Choose the stack that lets you ship tomorrow, not the stack that would impress at a conference talk.</p>
+            <cite>Pragmatic Engineering Principle, Echoed Across YC Batches</cite>
+          </blockquote>
+
+          <p class="lede">Your technology stack is a means to an end. The end is shipping a product that solves a real problem for real people. Every technical decision should be evaluated against one criterion: does this get me to a user-validated product faster? If the answer is not an unambiguous yes, choose the simpler option.</p>
+
+          <h3>The Zero-Cost Stack</h3>
+          <p>This stack is chosen for a specific constraint: maximum capability at minimum cost. Every service listed has a free tier sufficient for building and launching an MVP. Total expected cost over six weeks: $150&ndash;300, primarily for LLM API calls.</p>
+
+          <div class="tablewrap">
+            <table>
+              <caption>Table 2 &middot; Recommended Zero-Cost Stack</caption>
+              <thead><tr><th>Layer</th><th>Choice</th><th>Free Tier</th><th>Rationale</th></tr></thead>
+              <tbody>
+                <tr><td>MAS Framework</td><td>CrewAI</td><td>Open source</td><td>Fastest agent framework. Production-ready. Role-based abstractions.</td></tr>
+                <tr><td>LLM Access</td><td>OpenRouter + GPT-4o-mini</td><td>$5&ndash;10/day</td><td>Single API for multiple models. Automatic fallback if one fails.</td></tr>
+                <tr><td>Frontend</td><td>React + Vite + Tailwind</td><td>Open source</td><td>Fast dev cycle. Agents write React well. Tailwind reduces CSS complexity.</td></tr>
+                <tr><td>Backend</td><td>FastAPI (Python)</td><td>Open source</td><td>Python ecosystem for ML/AI. Agents write Python natively. Async by default.</td></tr>
+                <tr><td>Database</td><td>Supabase PostgreSQL</td><td>500MB</td><td>Database + Auth + Storage + Realtime in one platform.</td></tr>
+                <tr><td>Authentication</td><td>Clerk</td><td>10,000 users</td><td>Pre-built React components. Social login. Session management.</td></tr>
+                <tr><td>Hosting</td><td>Vercel (FE) + Render (BE)</td><td>Hobby tier</td><td>Auto-deploy from Git. Preview deployments for every PR.</td></tr>
+                <tr><td>Payments</td><td>Stripe</td><td>Pay per transaction</td><td>Industry standard. Agents understand Stripe's API patterns.</td></tr>
+                <tr><td>Monitoring</td><td>Sentry</td><td>5,000 events</td><td>Error tracking with context. Sufficient for MVP stage.</td></tr>
+                <tr><td>Repository</td><td>GitHub + Actions</td><td>Unlimited public</td><td>Agents commit code. Actions run tests and deploy.</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3>Why This Stack Over Alternatives</h3>
+          <p><strong>Agent familiarity:</strong> Large language models have been trained on enormous quantities of React, Python, FastAPI, and Tailwind code. They write these technologies fluently. They struggle with newer or more obscure frameworks. By choosing popular, well-documented technologies, you get better agent output with less prompting effort.</p>
+          <p><strong>Community depth:</strong> When something breaks at 2 AM (and it will), you need Stack Overflow answers, GitHub issues, and Discord communities. This stack has them in abundance. Obscure technologies have beautiful documentation and zero community support.</p>
+          <p><strong>Free tier sufficiency:</strong> Every service in this stack offers a free tier that handles an MVP and its first users. You will not hit a paywall during the critical first six weeks. When you do eventually need to pay, you will have revenue to cover it.</p>
+
+          <div class="callout">
+            <p class="ctitle">The simplicity test</p>
+            <p>If you cannot explain your architecture to a non-technical customer in thirty seconds, it is too complex. Simplify until you can. Complex architectures are a form of procrastination masquerading as preparation.</p>
+          </div>
+        </section>
+
+        <hr class="div">
+
+        <section data-chapter id="ch9">
+          <p class="part-kicker">Chapter 09 · Part III, The Build</p>
+          <h2 class="chapter-title">From Code to Customers</h2>
+          <p class="chapter-meta"><span class="rtime"></span></p>
+
+          <blockquote class="pull">
+            <p>Startups can only solve one problem well at any given time.</p>
+            <cite>Y Combinator Essential Startup Advice</cite>
+          </blockquote>
+
+          <p class="lede">You have built the product. You have orchestrated agents, reviewed code, deployed to production, and verified that everything works. This is an achievement. It is also the easy part. The hard part is getting people to use it, trust it, and pay for it. This chapter is about crossing that chasm.</p>
+
+          <h3>The Pilot Program Strategy</h3>
+          <p>Do not launch to the world. Launch to five specific people. A pilot program is a controlled experiment with human participants who understand they are early users. This framing gives you permission to be imperfect while creating the conditions for genuine feedback and eventual conversion.</p>
+          <p>Structure your pilot program explicitly: two weeks duration, specific user commitments (use the product three times and provide feedback in a 15-minute call), personal onboarding via video call where you watch them sign up and complete their first task, and a conversion path where you ask for payment at the end. This is the ultimate validation. If someone who has used your product for two weeks will not pay for it, your product is not solving a painful enough problem.</p>
+
+          <h3>The Pricing Conversation</h3>
+          <p>Most first-time founders price too low. They want to remove friction. They want users to say yes. But a low price signals low value. If your product saves someone ten hours per week, charge accordingly.</p>
+          <p><strong>Value-based, not cost-based.</strong> Your price should reflect the value you create, not your costs. If your agent handles $50,000 worth of manual work annually, charging $500 per month is a 10x return for the customer. That is an easy sell.</p>
+          <p><strong>Anchor against labor costs.</strong> Frame your price against the cost of human labor. "One billing specialist costs $4,500 per month. Our agent does 80% of their work for $900 per month." This makes your price feel small, not large.</p>
+          <p><strong>Start high, discount for pilots.</strong> Set your standard price higher than you think. Offer pilot users 50% off for the first three months. This frames the discount as a favor, not the base price. When the discount expires, the user has already integrated your product into their workflow.</p>
+
+          <h3>Growth Mechanics for the First Hundred Users</h3>
+          <p>Before you have product-market fit, growth is manual. There are no growth hacks, no viral loops, no marketing automation that substitutes for founder hustle. The Stripe founders became famous within YC for the "Collison Installation": when anyone agreed to try Stripe, they would set the person up on the spot rather than letting them sign up later. Airbnb's founders went door-to-door in New York recruiting users and helping them improve their listings. Pinterest's founder recruited initial users by talking to strangers in coffee shops.</p>
+          <p>Here are the tactics that work: direct outreach at scale (twenty personalized messages per day), community participation (join every community where your users gather and help genuinely), case study content (your first paying customer is your most valuable marketing asset), and referral incentives (offer one free month for every paying customer referred).</p>
+
+          <div class="callout">
+            <p class="ctitle">The traction threshold</p>
+            <p>By the time you submit your YC application, you need at least one of these: $500+ monthly recurring revenue, 10+ weekly active users, or 3+ paying customers. If you do not have one of these, do not apply yet. Spend another week on acquisition. Applications without traction have a near-zero acceptance rate regardless of how elegant the idea or architecture.</p>
+          </div>
+        </section>
+
+        <hr class="div">
+
+        <section id="part4">
+          <p class="part-kicker">Part IV</p>
+          <h2 class="chapter-title" style="font-size:1.7rem;font-style:italic;">The Pitch — Telling the story that wins</h2>
+        </section>
+
+        <hr class="div">
+        <section data-chapter id="ch10">
+          <p class="part-kicker">Chapter 10 · Part IV, The Pitch</p>
+          <h2 class="chapter-title">The Y Combinator Application</h2>
+          <p class="chapter-meta"><span class="rtime"></span></p>
+
+          <blockquote class="pull">
+            <p>YC partners review thousands of applications. Clarity isn't a nice-to-have; it's the minimum bar. If your description requires a paragraph of context before it makes sense, it won't survive the first filter.</p>
+            <cite>Y Combinator Application Guidance (2025)</cite>
+          </blockquote>
+
+          <p class="lede">Your YC application will be read in under five minutes by a partner who has read thousands of similar applications. Every word must earn its place. Every claim must be grounded in evidence. Every answer must reveal the kind of founder who cannot be stopped. This chapter is about crafting an application that demands attention.</p>
+
+          <h3>The Philosophy of the Application</h3>
+          <p>The YC application is not a test you pass. It is a story you tell. The story is about a person who discovered a painful problem, built a solution despite constraints, found users who wanted it, and now needs capital and network to scale. Your job is to make this story so compelling that the partner reading it wants to be part of it.</p>
+          <p>The narrative arc is simple but non-negotiable: you lived the problem; you validated it with real people; you built something despite constraints; people are using it and paying for it; you are the right person to scale this. If any element of this arc is missing, the story collapses.</p>
+
+          <h3>Field-by-Field Guide</h3>
+          <h4>&ldquo;What is your company going to make?&rdquo;</h4>
+          <p>This is the most important field. Spend 40% of your application time on this one answer. Michael Seibel advises that you need a simple two-sentence explanation of what your company does, plus a specific example. Do not use jargon. Explain it in simple terms anyone would understand.</p>
+
+          <div class="factbox">
+            <span class="icon">&times;</span>
+            <p style="margin:0;"><strong>Bad:</strong> "We are building an AI-powered platform that leverages multi-agent systems to revolutionize workflow automation for businesses through intelligent process orchestration."</p>
+          </div>
+          <div class="factbox">
+            <span class="icon" style="color:var(--moss);">&#10003;</span>
+            <p style="margin:0;"><strong>Good:</strong> "ClaimPilot is an AI agent that handles denied insurance claim follow-ups for hospital billing departments. Unlike Waystar, which only tracks claims, our agent actually makes the follow-up calls, navigates payer portals, and resubmits documentation. Regional Medical reduced their billing team's Monday workload from six hours to forty-five minutes."</p>
+          </div>
+
+          <h4>&ldquo;Why did you pick this idea to work on?&rdquo;</h4>
+          <p>This question tests founder-market fit. The answer must be personal and specific. Connect your history to the problem domain.</p>
+          <div class="factbox">
+            <span class="icon">&times;</span>
+            <p style="margin:0;"><strong>Bad:</strong> "We saw a huge opportunity in the healthcare billing market and believe AI can transform the industry."</p>
+          </div>
+          <div class="factbox">
+            <span class="icon" style="color:var(--moss);">&#10003;</span>
+            <p style="margin:0;"><strong>Good:</strong> "I spent two years as a billing coordinator at a 200-bed hospital. Every Monday, I processed forty to sixty denied claims manually. I tried Waystar, Experian Health, and even a custom Excel system. None handled the actual follow-up. When I left, I called five former colleagues and every single one said the same thing: 'If you build this, we will buy it on day one.' I am building this because I lived the problem and I know exactly how to solve it."</p>
+          </div>
+
+          <h4>&ldquo;What's new about what you're making?&rdquo;</h4>
+          <p>Be specific about your mechanism, not your category. Not "we use AI agents." Instead, explain the specific domain knowledge or workflow integration that makes your approach different.</p>
+
+          <h4>&ldquo;How do or will you make money?&rdquo;</h4>
+          <p>Show you have thought about business model and unit economics. Specific pricing, comparison to current costs, and revenue potential at scale.</p>
+
+          <h4>&ldquo;How will you get users?&rdquo;</h4>
+          <p>Demonstrate that you already have a working acquisition channel. Documented channels with conversion rates. "We found our first five customers through direct LinkedIn outreach to billing managers. Our response rate is 12%, meeting booking rate is 30%, and pilot-to-paid conversion is 60%."</p>
+
+          <div class="callout">
+            <p class="ctitle">The data imperative</p>
+            <p>Notice what every good answer has in common: specific numbers, named people, and documented outcomes. Vague claims signal vague thinking. Precision signals competence. When in doubt, add a number. When uncertain, name a person.</p>
+          </div>
+
+          <h3>The One-Minute Video</h3>
+          <p>The video is not a production. It is a proof of founder quality. Partners watch at double speed. You have thirty seconds of actual attention. The script structure:</p>
+
+          <div class="tablewrap">
+            <table>
+              <caption>Table 3 &middot; Video Script by Seconds</caption>
+              <thead><tr><th>Time</th><th>Purpose</th><th>Example</th></tr></thead>
+              <tbody>
+                <tr><td>0&ndash;5s</td><td>Name + hook</td><td>"I am [Name], founder of [Company]."</td></tr>
+                <tr><td>5&ndash;15s</td><td>Personal problem</td><td>"I spent two years manually following up on denied insurance claims. It took six hours every Monday."</td></tr>
+                <tr><td>15&ndash;30s</td><td>Solution demo</td><td>"So I built [Product]." [Screen recording] "Our AI agent handles the entire follow-up process."</td></tr>
+                <tr><td>30&ndash;45s</td><td>Traction</td><td>"Three hospitals are using it. One reduced their Monday billing time by 85%. We are at $1,800 MRR after six weeks."</td></tr>
+                <tr><td>45&ndash;55s</td><td>Market + ambition</td><td>"Medical billing is a $28B market. We start with follow-ups, then automate the entire revenue cycle."</td></tr>
+                <tr><td>55&ndash;60s</td><td>Close</td><td>"I am a solo founder with AI agents for a team. YC will help us go from three hospitals to three hundred."</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p>Technical requirements: 1080p minimum, face a window for lighting, use a USB microphone for clear audio, keep it to exactly 60 seconds, and show your product actually working.</p>
+        </section>
+
+        <hr class="div">
+
+        <section data-chapter id="ch11">
+          <p class="part-kicker">Chapter 11 · Part IV, The Pitch</p>
+          <h2 class="chapter-title">The Interview and Beyond</h2>
+          <p class="chapter-meta"><span class="rtime"></span></p>
+
+          <blockquote class="pull">
+            <p>YC interviews are 10 minutes with 2&ndash;4 partners. Rapid-fire, pressure-tested, no preamble.</p>
+            <cite>Y Combinator Interview Process Documentation</cite>
+          </blockquote>
+
+          <p class="lede">If your application passes the initial review, you will be invited to a ten-minute video interview with two to four YC partners. This is the fastest, most high-stakes conversation of your founder career. Ten minutes to demonstrate that you are competent, committed, and capable of building something massive. Of every 1,000 applications, roughly 60 to 100 get interviews, and 15 to 20 get accepted. This chapter is about winning that conversation.</p>
+
+          <h3>What Partners Are Testing</h3>
+          <p>The interview is not about your product. It is about you. Partners have already read your application. They know what you are building. What they do not know is whether you are the kind of person who can execute under pressure, adapt to feedback, and build relentlessly for ten years.</p>
+          <p><strong>Clarity of thought.</strong> Can you explain complex things simply? When asked a hard question, do you think before speaking or ramble? Do you answer the question that was asked, or the question you wish had been asked?</p>
+          <p><strong>Speed of learning.</strong> When a partner challenges your assumption, do you defend or do you consider? Can you incorporate new information in real time?</p>
+          <p><strong>Relentlessness.</strong> Do you have the energy and commitment to push through the inevitable hard times? Can you point to specific evidence that you ship despite obstacles?</p>
+          <p><strong>Market insight.</strong> Do you understand your market at a granular level? Not market size reports. The actual dynamics of how decisions are made, who influences them, and why incumbents are vulnerable.</p>
+
+          <h3>The Questions You Will Face</h3>
+          <div class="tablewrap">
+            <table>
+              <caption>Table 4 &middot; Common Interview Questions and Strategy</caption>
+              <thead><tr><th>Question</th><th>What They Want</th><th>Model Answer</th></tr></thead>
+              <tbody>
+                <tr><td>&ldquo;Why you?&rdquo;</td><td>Founder-market fit</td><td>"I spent two years in medical billing. I know the forty-seven reasons claims get denied. An engineer without this experience would take a year to learn what I know."</td></tr>
+                <tr><td>&ldquo;What if Google builds this?&rdquo;</td><td>Defensibility analysis</td><td>"Google builds horizontal platforms, not vertical workflows. They will never encode Medicare billing rules. Our moat is domain depth, not technology."</td></tr>
+                <tr><td>&ldquo;Why is this not just a feature?&rdquo;</td><td>Market scope</td><td>"Follow-up calls are just the entry point. We are building the autonomous billing department, not a call automation tool."</td></tr>
+                <tr><td>&ldquo;How do you know customers want this?&rdquo;</td><td>Validation depth</td><td>Name three customers, quote their feedback, cite conversion metrics.</td></tr>
+                <tr><td>&ldquo;What is your biggest weakness?&rdquo;</td><td>Self-awareness</td><td>"Enterprise sales cycles. We close pilots in two weeks but converting to annual contracts takes six to eight weeks."</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3>The Post-Interview Reality</h3>
+          <p>After the interview, you will receive a decision within 24 hours. If accepted, you have until the batch start date to prepare. If rejected, you have two options: reapply for the next batch with improved traction, or continue building without YC. Rejection is not a verdict on your potential. It is a signal about your current stage. Many successful companies were rejected multiple times before acceptance. The correct response to rejection is demonstrated growth.</p>
+          <p>If accepted, the batch is approximately ten weeks of intense work. You will have weekly office hours with a partner, access to YC's network of alumni and investors, and the pressure of Demo Day at the end. The $500,000 investment is helpful but secondary. The network, the accountability, and the concentrated feedback are what create the outcomes that make headlines.</p>
+        </section>
+
+        <hr class="div">
+
+        <section id="part5">
+          <p class="part-kicker">Part V</p>
+          <h2 class="chapter-title" style="font-size:1.7rem;font-style:italic;">The Reality — After the application, before the IPO</h2>
+        </section>
+
+        <hr class="div">
+        <section data-chapter id="ch12">
+          <p class="part-kicker">Chapter 12 · Part V, The Reality</p>
+          <h2 class="chapter-title">The First Hundred Days</h2>
+          <p class="chapter-meta"><span class="rtime"></span></p>
+
+          <blockquote class="pull">
+            <p>Being a founder is incredibly difficult, stressful, and requires 24 hour focus. Being a founder isn't glamorous.</p>
+            <cite>Dustin Moskovitz, YC How to Start a Startup Lecture (2014)</cite>
+          </blockquote>
+
+          <p class="lede">Whether or not you get into YC, the first hundred days after your application submission are the most formative period of your company. This is when you either build momentum or lose it. When you either prove that your traction was not a fluke or discover that your initial users were not representative. This chapter is about navigating that period with discipline.</p>
+
+          <h3>If You Get In</h3>
+          <p>Congratulations. Now the real work begins. YC's value is not the money. It is the compression of learning that occurs when you are surrounded by other founders who are moving fast, when you have weekly accountability to a partner who has seen thousands of companies, and when you have a hard deadline called Demo Day that forces prioritization.</p>
+          <p>The most important habit during the batch is maintaining your customer conversation velocity. It is easy to get distracted by batch activities, social events, and networking. Do not. The founders who raise the most on Demo Day are the ones who kept talking to users while everyone else was attending mixers. As Sam Altman advised in his Stanford lecture series on startups: build products, talk to users, eat, sleep, and nothing else.</p>
+
+          <h3>If You Do Not Get In</h3>
+          <p>Rejection stings. Let it sting for one day. Then get back to work. YC is one path among many. The companies that matter are built by founders who would build regardless of whether an accelerator accepted them.</p>
+          <p>Your action plan after rejection: Week one, analyze honestly and identify the weakest element. Weeks two through four, execute the improvement plan. Weeks five through eight, continue building and growing with the same discipline you would have applied during the batch. Week nine, reapply if the next batch deadline allows. YC openly encourages reapplication and has noted that many successful alumni were rejected on previous attempts.</p>
+
+          <h3>The Metrics That Matter</h3>
+          <p>Whether you are in YC or not, these metrics determine your company's trajectory: weekly active users (people who actively used your product this week, not registered users or downloads), revenue growth rate (20&ndash;30% month-over-month is the threshold that signals product-market fit), retention cohorts (of users who started in month one, what percentage are still active in month three), net promoter score (ask users how likely they are to recommend your product to a colleague; scores above 50 indicate strong product-market fit), and unit economics (customer acquisition cost, lifetime value, payback period).</p>
+        </section>
+
+        <hr class="div">
+
+        <section data-chapter id="ch13">
+          <p class="part-kicker">Chapter 13 · Part V, The Reality</p>
+          <h2 class="chapter-title">The Founder's Discipline</h2>
+          <p class="chapter-meta"><span class="rtime"></span></p>
+
+          <blockquote class="pull">
+            <p>The very best startup ideas tend to have three things in common: they're something the founders themselves want, that they themselves can build, and that few others realize are worth doing.</p>
+            <cite>Paul Graham, Y Combinator Co-Founder (2005)</cite>
+          </blockquote>
+
+          <p class="lede">This is the final chapter, and it is about the only thing that ultimately matters: the discipline of building for humans, not for portfolios. Tactical advice on customer discovery, multi-agent architecture, application writing, and interview preparation only goes so far. Tactics are worthless without the right foundation. This chapter is about the practices that separate founders who build lasting companies from those who build impressive demos.</p>
+
+          <h3>Build for Humans, Not Portfolios</h3>
+          <p>The most dangerous trap for technical founders is building to demonstrate capability rather than to serve users. The portfolio mindset produces elegant solutions to unimportant problems. It produces architectures that impress engineers and confuse customers. It produces demo videos that look great and products that no one uses.</p>
+          <p>The antidote is relentless user focus. Before every decision, ask: "How does this serve the person who is paying me?" Not "How does this showcase my technical sophistication?" The user does not care about your microservices architecture. They care that their problem is solved quickly, reliably, and affordably. As Paul Graham put it: you can't wait for users to come to you, you have to go out and get them.</p>
+          <p>This sounds obvious. It is not. The temptation to optimize for impressiveness is constant. Every technical blog post, every framework announcement, every AI research paper creates pressure to adopt the new and shiny. Resist. Your users do not want shiny. They want solved.</p>
+
+          <h3>The Long Game</h3>
+          <p>YC acceptance is not success. It is a milestone. The real journey is ten years of building, adapting, and persisting. The founders who create enduring companies are not the ones who had the best YC applications. They are the ones who maintained their user obsession through every phase of growth.</p>
+          <p>In year one, you are discovering the problem. In year two, you are finding product-market fit. In year three, you are scaling what works. In year five, you are defending against competitors. In year ten, you are reinventing yourself to stay relevant. At every stage, the companies that win are the ones that never lost touch with the humans they serve.</p>
+
+          <h3>Discipline in Practice</h3>
+          <p><strong>Every week,</strong> talk to at least one user. Not about your product. About their life, their work, their challenges. The conversations that produce the best product insights are the ones where your product is never mentioned.</p>
+          <p><strong>Every month,</strong> do the job your product automates. If you build billing automation, spend a day doing billing manually. If you build code review tools, review code without your tool. The distance between your product and the actual work is where bad decisions live.</p>
+          <p><strong>Every quarter,</strong> ask five users: "What would make you leave?" This question surfaces the weaknesses and gaps you are too close to see. It also demonstrates to users that you care about retention, not just acquisition.</p>
+          <p><strong>Every year,</strong> revisit your problem thesis. Markets evolve. Problems shift. The thesis that was correct eighteen months ago may no longer be accurate. Update it based on new learning. Let it guide your pivot decisions.</p>
+
+          <div class="callout">
+            <p class="ctitle">The final check</p>
+            <p>Before you submit your YC application, before you write your first line of code, before you even choose a problem, answer this question honestly: "If I never get funded, if I never go viral, if I build this quietly for five years with modest revenue, would I still want to do it?"</p>
+            <p>If the answer is yes, you have found your problem. Build it. Ship it. Serve your users. Everything else follows.</p>
+          </div>
+        </section>
+
+        <hr class="div">
+
+        <section id="appendices-intro">
+          <p class="part-kicker">Appendices</p>
+          <h2 class="chapter-title" style="font-size:1.7rem;font-style:italic;">Tools and References — For the journey ahead</h2>
+        </section>
+
+        <hr class="div">
+        <section data-chapter id="appendix-a">
+          <p class="part-kicker">Appendix A</p>
+          <h2 class="chapter-title">The Six-Week Execution Checklist</h2>
+          <p class="chapter-meta"><span class="rtime"></span></p>
+          <p class="lede">An interactive version of the book's execution checklist. Check off tasks as you complete them &mdash; your progress is saved in this browser, week by week, so you can close the tab and pick up where you left off.</p>
+
+          <div class="overall-progress">
+            <span style="font-family:var(--mono);font-size:.78rem;color:var(--ink-soft);">Overall</span>
+            <div class="overall-bar"><i id="overallbar"></i></div>
+            <span class="opct" id="overallpct">0%</span>
+          </div>
+
+          <div class="week-card">
+            <div class="week-head"><h4>Week 1 &mdash; Problem Validation</h4>
+              <div class="week-progress-wrap"><span class="week-count">0/6</span><div class="week-bar"><i></i></div></div>
+            </div>
+            <div class="task-row"><label><input type="checkbox" data-key="w1-1"><span class="ttext"><span class="ttask">Identify 50 potential customers in target vertical</span><span class="tdeliv">Contact list with names, roles, and contact info</span></span></label></div>
+            <div class="task-row"><label><input type="checkbox" data-key="w1-2"><span class="ttext"><span class="ttask">Send 30 personalized outreach messages</span><span class="tdeliv">10+ responses scheduling calls</span></span></label></div>
+            <div class="task-row"><label><input type="checkbox" data-key="w1-3"><span class="ttext"><span class="ttask">Conduct 5 customer discovery calls</span><span class="tdeliv">5 recorded transcripts</span></span></label></div>
+            <div class="task-row"><label><input type="checkbox" data-key="w1-4"><span class="ttext"><span class="ttask">Document 50+ verbatim pain quotes</span><span class="tdeliv">Quote spreadsheet with source and context</span></span></label></div>
+            <div class="task-row"><label><input type="checkbox" data-key="w1-5"><span class="ttext"><span class="ttask">Write 1-page problem thesis</span><span class="tdeliv">Validated thesis document</span></span></label></div>
+            <div class="task-row"><label><input type="checkbox" data-key="w1-6"><span class="ttext"><span class="ttask">Write 1-page competitive analysis</span><span class="tdeliv">Competitor matrix with differentiation</span></span></label></div>
+          </div>
+
+          <div class="week-card">
+            <div class="week-head"><h4>Week 2 &mdash; Build</h4>
+              <div class="week-progress-wrap"><span class="week-count">0/6</span><div class="week-bar"><i></i></div></div>
+            </div>
+            <div class="task-row"><label><input type="checkbox" data-key="w2-1"><span class="ttext"><span class="ttask">Write 1-page product requirements document</span><span class="tdeliv">PRD with core workflow defined</span></span></label></div>
+            <div class="task-row"><label><input type="checkbox" data-key="w2-2"><span class="ttext"><span class="ttask">Design MAS architecture</span><span class="tdeliv">Architecture diagram + agent roles</span></span></label></div>
+            <div class="task-row"><label><input type="checkbox" data-key="w2-3"><span class="ttext"><span class="ttask">Set up development environment and repos</span><span class="tdeliv">GitHub repos with CI/CD configured</span></span></label></div>
+            <div class="task-row"><label><input type="checkbox" data-key="w2-4"><span class="ttext"><span class="ttask">Implement Orchestrator + Supervisors</span><span class="tdeliv">Working agent system</span></span></label></div>
+            <div class="task-row"><label><input type="checkbox" data-key="w2-5"><span class="ttext"><span class="ttask">Build core product functionality</span><span class="tdeliv">End-to-end demo workflow</span></span></label></div>
+            <div class="task-row"><label><input type="checkbox" data-key="w2-6"><span class="ttext"><span class="ttask">Record 2-minute demo video</span><span class="tdeliv">Demo video file</span></span></label></div>
+          </div>
+
+          <div class="week-card">
+            <div class="week-head"><h4>Week 3 &mdash; First Users</h4>
+              <div class="week-progress-wrap"><span class="week-count">0/5</span><div class="week-bar"><i></i></div></div>
+            </div>
+            <div class="task-row"><label><input type="checkbox" data-key="w3-1"><span class="ttext"><span class="ttask">Implement top 3 feedback items from pilot demos</span><span class="tdeliv">Improved product</span></span></label></div>
+            <div class="task-row"><label><input type="checkbox" data-key="w3-2"><span class="ttext"><span class="ttask">Build user onboarding flow</span><span class="tdeliv">60-second time-to-value</span></span></label></div>
+            <div class="task-row"><label><input type="checkbox" data-key="w3-3"><span class="ttext"><span class="ttask">Deploy to production</span><span class="tdeliv">Live product URL</span></span></label></div>
+            <div class="task-row"><label><input type="checkbox" data-key="w3-4"><span class="ttext"><span class="ttask">Onboard 3 pilot customers</span><span class="tdeliv">3 active users</span></span></label></div>
+            <div class="task-row"><label><input type="checkbox" data-key="w3-5"><span class="ttext"><span class="ttask">Document all friction points</span><span class="tdeliv">Improvement priority list</span></span></label></div>
+          </div>
+
+          <div class="week-card">
+            <div class="week-head"><h4>Week 4 &mdash; Traction</h4>
+              <div class="week-progress-wrap"><span class="week-count">0/5</span><div class="week-bar"><i></i></div></div>
+            </div>
+            <div class="task-row"><label><input type="checkbox" data-key="w4-1"><span class="ttext"><span class="ttask">Integrate Stripe billing</span><span class="tdeliv">Working payment flow</span></span></label></div>
+            <div class="task-row"><label><input type="checkbox" data-key="w4-2"><span class="ttext"><span class="ttask">Convert 2+ pilot users to paid</span><span class="tdeliv">First revenue</span></span></label></div>
+            <div class="task-row"><label><input type="checkbox" data-key="w4-3"><span class="ttext"><span class="ttask">Cold outreach to 20 new prospects</span><span class="tdeliv">20 personalized messages sent</span></span></label></div>
+            <div class="task-row"><label><input type="checkbox" data-key="w4-4"><span class="ttext"><span class="ttask">Post on relevant communities</span><span class="tdeliv">3 posts with engagement</span></span></label></div>
+            <div class="task-row"><label><input type="checkbox" data-key="w4-5"><span class="ttext"><span class="ttask">Close 1&ndash;2 new paying customers</span><span class="tdeliv">$500+ MRR or 10+ active users</span></span></label></div>
+          </div>
+
+          <div class="week-card">
+            <div class="week-head"><h4>Week 5 &mdash; Application</h4>
+              <div class="week-progress-wrap"><span class="week-count">0/5</span><div class="week-bar"><i></i></div></div>
+            </div>
+            <div class="task-row"><label><input type="checkbox" data-key="w5-1"><span class="ttext"><span class="ttask">Draft YC application v1</span><span class="tdeliv">Complete application draft</span></span></label></div>
+            <div class="task-row"><label><input type="checkbox" data-key="w5-2"><span class="ttext"><span class="ttask">Script 60-second video</span><span class="tdeliv">Video script with timing</span></span></label></div>
+            <div class="task-row"><label><input type="checkbox" data-key="w5-3"><span class="ttext"><span class="ttask">Record and edit video</span><span class="tdeliv">Final 60-second video</span></span></label></div>
+            <div class="task-row"><label><input type="checkbox" data-key="w5-4"><span class="ttext"><span class="ttask">Get feedback from 2 advisors</span><span class="tdeliv">Feedback incorporated</span></span></label></div>
+            <div class="task-row"><label><input type="checkbox" data-key="w5-5"><span class="ttext"><span class="ttask">Final application review</span><span class="tdeliv">Application ready to submit</span></span></label></div>
+          </div>
+
+          <div class="week-card">
+            <div class="week-head"><h4>Week 6 &mdash; Submit</h4>
+              <div class="week-progress-wrap"><span class="week-count">0/4</span><div class="week-bar"><i></i></div></div>
+            </div>
+            <div class="task-row"><label><input type="checkbox" data-key="w6-1"><span class="ttext"><span class="ttask">Final proofread and link check</span><span class="tdeliv">All fields verified</span></span></label></div>
+            <div class="task-row"><label><input type="checkbox" data-key="w6-2"><span class="ttext"><span class="ttask">Submit application</span><span class="tdeliv">Confirmation received</span></span></label></div>
+            <div class="task-row"><label><input type="checkbox" data-key="w6-3"><span class="ttext"><span class="ttask">Continue growth (do not pause)</span><span class="tdeliv">+2 users or +$200 MRR</span></span></label></div>
+            <div class="task-row"><label><input type="checkbox" data-key="w6-4"><span class="ttext"><span class="ttask">Prepare interview answers</span><span class="tdeliv">Written responses to 10 common questions</span></span></label></div>
+          </div>
+
+          <button class="resetbtn" id="resetchecklist">Reset all progress</button>
+        </section>
+
+        <hr class="div">
+        <section data-chapter id="appendix-b">
+          <p class="part-kicker">Appendix B</p>
+          <h2 class="chapter-title">MAS Prompt Library</h2>
+          <p class="chapter-meta"><span class="rtime"></span></p>
+          <p class="lede">These prompts initialize the core agents in your development system. Customize them for your specific product domain and technology choices.</p>
+
+          <h4>Orchestrator Agent</h4>
+          <div class="codeblock">
+            <div class="chead"><span>orchestrator.prompt</span><button class="copybtn">Copy</button></div>
+            <pre>You are the Orchestrator of a software development team.
+
+PROJECT: [Your product name and one-sentence description]
+STACK: React + FastAPI + PostgreSQL + Tailwind CSS
+GOAL: [Current sprint goal]
+
+Your responsibilities:
+1. Receive requirements from the human founder and decompose into tasks
+2. Route tasks to the appropriate Domain Supervisor (frontend, backend, qa)
+3. Track dependencies between tasks and manage execution order
+4. Report progress every 2 hours with completed tasks, blockers, and next steps
+5. Escalate to human when: architectural decisions needed, repeated failures,
+   confidence &lt; 80%
+
+Rules:
+- Never write code. Delegate to supervisors.
+- Always include acceptance criteria with task assignments
+- Maintain awareness of project state
+- Ask for clarification when requirements are ambiguous
+- Prioritize speed over perfection for MVP features</pre>
+          </div>
+
+          <h4>Frontend Supervisor</h4>
+          <div class="codeblock">
+            <div class="chead"><span>frontend-supervisor.prompt</span><button class="copybtn">Copy</button></div>
+            <pre>You are the Frontend Supervisor for a React application using Tailwind CSS.
+
+TECHNOLOGY: React 18, Vite, Tailwind CSS, React Query, React Router
+PATTERNS: Functional components, custom hooks, container/presenter pattern
+
+Your responsibilities:
+1. Receive UI tasks from the Orchestrator and break them into component-level work
+2. Assign tasks to UI Worker, Client Worker, or CSS Worker based on type
+3. Review all frontend code for consistency, accessibility, and responsiveness
+4. Ensure all components handle loading, error, and empty states
+
+Rules:
+- Mobile-first responsive design
+- WCAG 2.1 AA accessibility compliance
+- No inline styles. Use Tailwind utility classes.
+- All API calls go through the Client Worker using React Query</pre>
+          </div>
+
+          <h4>Backend Supervisor</h4>
+          <div class="codeblock">
+            <div class="chead"><span>backend-supervisor.prompt</span><button class="copybtn">Copy</button></div>
+            <pre>You are the Backend Supervisor for a FastAPI application using PostgreSQL.
+
+TECHNOLOGY: Python 3.11, FastAPI, SQLAlchemy, Pydantic, Alembic
+PATTERNS: Repository pattern, dependency injection, async endpoints
+
+Your responsibilities:
+1. Receive backend tasks from the Orchestrator and break them into endpoint/function work
+2. Assign tasks to API Worker, Data Worker, or Logic Worker
+3. Review all backend code for security, performance, and correctness
+4. Ensure all endpoints have proper validation and error handling
+
+Rules:
+- All endpoints async with proper HTTP status codes
+- Input validation with Pydantic models
+- SQL injection prevention via SQLAlchemy ORM (no raw SQL)
+- Authentication on all non-public endpoints</pre>
+          </div>
+
+          <h4>QA Supervisor</h4>
+          <div class="codeblock">
+            <div class="chead"><span>qa-supervisor.prompt</span><button class="copybtn">Copy</button></div>
+            <pre>You are the QA Supervisor responsible for testing and quality assurance.
+
+TECHNOLOGY: pytest, Playwright, coverage.py
+TARGET: 80%+ code coverage, all critical paths tested
+
+Your responsibilities:
+1. Generate test cases from requirements and acceptance criteria
+2. Write unit tests for business logic
+3. Write integration tests for API endpoints
+4. Write E2E tests for critical user flows
+5. Perform security scanning (OWASP top 10 checks)
+
+Rules:
+- Test names must describe what is being tested
+- Mock external dependencies (APIs, databases)
+- Test edge cases and error paths, not just happy paths
+- No code merges without passing tests</pre>
+          </div>
+        </section>
+
+        <hr class="div">
+
+        <section data-chapter id="appendix-c">
+          <p class="part-kicker">Appendix C</p>
+          <h2 class="chapter-title">YC Application Field Reference</h2>
+          <p class="chapter-meta"><span class="rtime"></span></p>
+
+          <div class="tablewrap">
+            <table>
+              <caption>Table 11 &middot; Complete Application Field Guide</caption>
+              <thead><tr><th>Field</th><th>Strategy</th></tr></thead>
+              <tbody>
+                <tr><td>Company name</td><td>Use real domain you own</td></tr>
+                <tr><td>Company URL</td><td>Live product, not landing page</td></tr>
+                <tr><td>What is your company going to make?</td><td>One sentence. Specific user, specific outcome, specific differentiation.</td></tr>
+                <tr><td>Why did you pick this idea?</td><td>Personal connection + market validation</td></tr>
+                <tr><td>What's new about what you're making?</td><td>Specific mechanism, not "we use AI"</td></tr>
+                <tr><td>What do you understand that others don't?</td><td>Domain insight that took time to acquire</td></tr>
+                <tr><td>Who are your competitors?</td><td>3&ndash;5 real competitors + why they fail</td></tr>
+                <tr><td>How do/will you make money?</td><td>Specific pricing + unit economics</td></tr>
+                <tr><td>How will you get users?</td><td>Documented channels + conversion rates</td></tr>
+                <tr><td>Current status</td><td>Users, revenue, product stage with dates</td></tr>
+                <tr><td>Something surprising</td><td>Genuine surprise demonstrating resourcefulness</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <hr class="div">
+        <section data-chapter id="appendix-d">
+          <p class="part-kicker">Appendix D</p>
+          <h2 class="chapter-title">Idea Evaluation Matrix</h2>
+          <p class="chapter-meta"><span class="rtime"></span></p>
+          <p class="lede">Score a potential idea on each criterion below. Minimum viable total: 20/35. Your sliders are saved in this browser so you can come back and re-score as you learn more.</p>
+
+          <div class="matrix" id="ideamatrix">
+            <div class="matrix-row">
+              <div class="mlabel"><b>Personal domain expertise</b><span>Critical</span></div>
+              <input type="range" min="1" max="5" value="3" data-key="m1">
+              <span class="mval">3</span>
+            </div>
+            <div class="matrix-row">
+              <div class="mlabel"><b>Market size ($1B+)</b><span>Critical</span></div>
+              <input type="range" min="1" max="5" value="3" data-key="m2">
+              <span class="mval">3</span>
+            </div>
+            <div class="matrix-row">
+              <div class="mlabel"><b>Agentic build feasibility (2 weeks)</b><span>Critical</span></div>
+              <input type="range" min="1" max="5" value="3" data-key="m3">
+              <span class="mval">3</span>
+            </div>
+            <div class="matrix-row">
+              <div class="mlabel"><b>B2B focus</b><span>Important</span></div>
+              <input type="range" min="1" max="5" value="3" data-key="m4">
+              <span class="mval">3</span>
+            </div>
+            <div class="matrix-row">
+              <div class="mlabel"><b>YC Requests for Startups alignment</b><span>Important</span></div>
+              <input type="range" min="1" max="5" value="3" data-key="m5">
+              <span class="mval">3</span>
+            </div>
+            <div class="matrix-row">
+              <div class="mlabel"><b>Speed to first revenue (2 weeks)</b><span>Critical</span></div>
+              <input type="range" min="1" max="5" value="3" data-key="m6">
+              <span class="mval">3</span>
+            </div>
+            <div class="matrix-row">
+              <div class="mlabel"><b>Defensibility potential</b><span>Important</span></div>
+              <input type="range" min="1" max="5" value="3" data-key="m7">
+              <span class="mval">3</span>
+            </div>
+            <div class="matrix-foot">
+              <span>Total: <strong id="mtotal">21 / 35</strong></span>
+              <span class="verdict go" id="mverdict">Worth pursuing</span>
+            </div>
+          </div>
+          <button class="resetbtn" id="resetmatrix">Reset scores to 3</button>
+        </section>
+
+        <hr class="div">
+
+        <section id="references">
+          <p class="part-kicker">Notes</p>
+          <h2 class="chapter-title" style="font-size:1.8rem;">References</h2>
+          <ol class="refs">
+            <li><span class="num">[1]</span>Y Combinator. (n.d.). Resources for investors. Y Combinator. <a href="https://www.ycombinator.com/investors" target="_blank" rel="noopener">ycombinator.com/investors</a></li>
+            <li><span class="num">[2]</span>Graham, P. (2012). How to get startup ideas. PaulGraham.com. <a href="http://paulgraham.com/startupideas.html" target="_blank" rel="noopener">paulgraham.com/startupideas.html</a></li>
+            <li><span class="num">[3]</span>Lindgaard, G., Fernandes, G., Dudek, C., &amp; Brown, J. (2006). Attention web designers: You have 50 milliseconds to make a good first impression! <em>Behaviour &amp; Information Technology</em>, 25(2), 115&ndash;126.</li>
+            <li><span class="num">[4]</span>Norman, D. A. (2013). <em>The Design of Everyday Things: Revised and Expanded Edition.</em> Basic Books.</li>
+            <li><span class="num">[5]</span>Fitzpatrick, R. (2013). <em>The Mom Test: How to Talk to Customers and Learn If Your Business Is a Good Idea When Everyone Is Lying to You.</em> CreateSpace.</li>
+            <li><span class="num">[6]</span>Blank, S. G. (2005). <em>The Four Steps to the Epiphany: Successful Strategies for Products That Win.</em> Cafepress.com.</li>
+            <li><span class="num">[7]</span>We Are Founders. (2026, April 27). Y Combinator acceptance rate 2026: What the data shows. <a href="https://www.wearefounders.uk/y-combinator-acceptance-rate-2026/" target="_blank" rel="noopener">wearefounders.uk</a></li>
+            <li><span class="num">[8]</span>Seibel, M. (n.d.). How to perfectly pitch your seed stage startup. Y Combinator. <a href="https://fondo.com/blog/perfectly-pitch-seed-stage-startup-y-combinator-michael-seibel" target="_blank" rel="noopener">fondo.com</a></li>
+            <li><span class="num">[9]</span>Y Combinator. (2020, June 9). YC's essential startup advice. <a href="https://www.ycombinator.com/library/4D-yc-s-essential-startup-advice" target="_blank" rel="noopener">ycombinator.com/library</a></li>
+            <li><span class="num">[10]</span>Graham, P. (2013). Do things that don't scale. PaulGraham.com. <a href="http://paulgraham.com/ds.html" target="_blank" rel="noopener">paulgraham.com/ds.html</a></li>
+            <li><span class="num">[11]</span>We Are Founders. (2026, April 27). Y Combinator acceptance rate 2026: B2B dominates. <a href="https://www.wearefounders.uk/y-combinator-acceptance-rate-2026/" target="_blank" rel="noopener">wearefounders.uk</a></li>
+            <li><span class="num">[12]</span>Altman, S. (2014). How to start a startup [Lecture series]. Stanford University.</li>
+            <li><span class="num">[13]</span>Y Combinator. (2022, January 10). YC's $500k standard deal. Hacker News. <a href="https://news.ycombinator.com/item?id=29878365" target="_blank" rel="noopener">news.ycombinator.com</a></li>
+            <li><span class="num">[14]</span>Heyman, J. (2022, January 12). On the $500k Y Combinator standard deal. Medium.</li>
+            <li><span class="num">[15]</span>Chen, S. (2022, March 13). Y Combinator Q&amp;A at MIT: Start-up advice from Michael Seibel. Medium.</li>
+            <li><span class="num">[16]</span>He, J., Treude, C., &amp; Lo, D. (2025). LLM-based multi-agent systems for software engineering: Literature review, vision, and the road ahead. <em>ACM Transactions on Software Engineering and Methodology</em>, 34(5), Article 124.</li>
+            <li><span class="num">[17]</span>JPMorgan Chase. (2025). ALMAS: An autonomous LLM-based multi-agent software engineering framework. arXiv preprint.</li>
+            <li><span class="num">[18]</span>RTADev. (2025). Intention aligned multi-agent framework for software development. In <em>Findings of the Association for Computational Linguistics (ACL 2025)</em>.</li>
+          </ol>
+        </section>
+
+      </div>
+
+      <footer class="colophon">
+        Built for Humans &copy; 2026 Sreekesari Vangeepuram &middot; Licensed under CC BY-NC-SA 4.0 &middot;
+        <a href="mailto:builtforhumans@proton.me">builtforhumans@proton.me</a><br><br>
+        Build for people. The rest follows.
+      </footer>
+    </main>
+  </div>
+
+  <button class="top-btn" id="topbtn" aria-label="Back to top">&uarr;</button>
+<script>
+  (function(){
+    var doc = document;
+    var html = doc.documentElement;
+
+    /* ---------- mobile nav ---------- */
+    var sidebar = doc.getElementById('sidebar');
+    var menubtn = doc.getElementById('menubtn');
+    var scrim = doc.getElementById('scrim');
+    function openNav(){ sidebar.classList.add('open'); scrim.classList.add('show'); menubtn.setAttribute('aria-expanded','true'); }
+    function closeNav(){ sidebar.classList.remove('open'); scrim.classList.remove('show'); menubtn.setAttribute('aria-expanded','false'); }
+    menubtn.addEventListener('click', function(){
+      sidebar.classList.contains('open') ? closeNav() : openNav();
+    });
+    scrim.addEventListener('click', closeNav);
+    doc.querySelectorAll('.toc a').forEach(function(a){
+      a.addEventListener('click', function(){ if(window.innerWidth<=980) closeNav(); });
+    });
+
+    /* ---------- reading mode toggle ---------- */
+    var modeBtn = doc.getElementById('modebtn');
+    function applyMode(saved){
+      if(saved==='dark'){ html.classList.add('dark-read'); modeBtn.querySelector('.lbl').textContent='Light page'; }
+      else { html.classList.remove('dark-read'); modeBtn.querySelector('.lbl').textContent='Dark page'; }
+    }
+    try{ applyMode(localStorage.getItem('bfh-mode')); }catch(e){}
+    modeBtn.addEventListener('click', function(){
+      var next = html.classList.contains('dark-read') ? 'light' : 'dark';
+      applyMode(next);
+      try{ localStorage.setItem('bfh-mode', next); }catch(e){}
+    });
+
+    /* ---------- serif size toggle (A+/A-) ---------- */
+    var sizeBtn = doc.getElementById('sizebtn');
+    var sizes = ['17px','18px','20px'];
+    var sizeNames = ['S','M','L'];
+    var sizeIdx = 1;
+    try{
+      var savedSize = localStorage.getItem('bfh-size');
+      if(savedSize!==null){ sizeIdx = parseInt(savedSize,10) || 1; }
+    }catch(e){}
+    function applySize(){
+      doc.body.style.fontSize = sizes[sizeIdx];
+      sizeBtn.querySelector('.lbl').textContent = 'Type ' + sizeNames[sizeIdx];
+    }
+    applySize();
+    sizeBtn.addEventListener('click', function(){
+      sizeIdx = (sizeIdx+1) % sizes.length;
+      applySize();
+      try{ localStorage.setItem('bfh-size', sizeIdx); }catch(e){}
+    });
+
+    /* ---------- progress bar ---------- */
+    var bar = doc.getElementById('progress');
+    function updateProgress(){
+      var h = doc.documentElement;
+      var scrollTop = h.scrollTop || doc.body.scrollTop;
+      var height = h.scrollHeight - h.clientHeight;
+      var pct = height>0 ? (scrollTop/height)*100 : 0;
+      bar.style.width = pct + '%';
+      var topBtn = doc.getElementById('topbtn');
+      if(scrollTop>900){ topBtn.classList.add('show'); } else { topBtn.classList.remove('show'); }
+    }
+    doc.addEventListener('scroll', updateProgress, {passive:true});
+    updateProgress();
+    doc.getElementById('topbtn').addEventListener('click', function(){
+      window.scrollTo({top:0, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'});
+    });
+
+    /* ---------- reading time per chapter ---------- */
+    doc.querySelectorAll('[data-chapter]').forEach(function(sec){
+      var words = sec.textContent.trim().split(/\s+/).length;
+      var mins = Math.max(1, Math.round(words/220));
+      var slot = sec.querySelector('.rtime');
+      if(slot) slot.textContent = mins + ' min read';
+      var navlink = doc.querySelector('.toc a[href="#'+sec.id+'"] .time');
+      if(navlink) navlink.textContent = mins+'m';
+    });
+
+    /* ---------- scrollspy ---------- */
+    var navLinks = Array.prototype.slice.call(doc.querySelectorAll('.toc a.chap'));
+    var targets = navLinks.map(function(a){ return doc.getElementById(a.getAttribute('href').slice(1)); }).filter(Boolean);
+    var mobileCur = doc.getElementById('mobilecur');
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(en.isIntersecting){
+          var id = en.target.id;
+          navLinks.forEach(function(a){ a.classList.toggle('active', a.getAttribute('href')==='#'+id); });
+          var active = doc.querySelector('.toc a.chap.active .ttl');
+          if(active && mobileCur) mobileCur.textContent = active.textContent;
+        }
+      });
+    }, {rootMargin:'-15% 0px -70% 0px', threshold:0});
+    targets.forEach(function(t){ io.observe(t); });
+
+    /* ---------- keyboard chapter nav (j/k) ---------- */
+    doc.addEventListener('keydown', function(e){
+      var tag = (e.target.tagName||'').toLowerCase();
+      if(tag==='input'||tag==='textarea') return;
+      if(e.key!=='j' && e.key!=='k') return;
+      var activeIdx = navLinks.findIndex(function(a){ return a.classList.contains('active'); });
+      if(activeIdx===-1) activeIdx=0;
+      var nextIdx = e.key==='j' ? Math.min(navLinks.length-1, activeIdx+1) : Math.max(0, activeIdx-1);
+      var t = doc.getElementById(navLinks[nextIdx].getAttribute('href').slice(1));
+      if(t) t.scrollIntoView({behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block:'start'});
+    });
+
+    /* ---------- copy buttons ---------- */
+    doc.querySelectorAll('.copybtn').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        var pre = btn.closest('.codeblock').querySelector('pre');
+        var text = pre.textContent;
+        navigator.clipboard && navigator.clipboard.writeText(text).then(function(){
+          var old = btn.textContent;
+          btn.textContent = 'Copied';
+          setTimeout(function(){ btn.textContent = old; }, 1600);
+        });
+      });
+    });
+
+    /* ---------- six-week checklist ---------- */
+    var STORE_KEY = 'bfh-checklist-v1';
+    var state = {};
+    try{ state = JSON.parse(localStorage.getItem(STORE_KEY) || '{}'); }catch(e){ state = {}; }
+    var boxes = doc.querySelectorAll('.task-row input[type=checkbox]');
+    function refreshChecklist(){
+      var totalAll=0, doneAll=0;
+      doc.querySelectorAll('.week-card').forEach(function(card){
+        var rows = card.querySelectorAll('.task-row');
+        var done=0;
+        rows.forEach(function(r){
+          var cb = r.querySelector('input');
+          if(cb.checked){ done++; r.classList.add('done'); } else { r.classList.remove('done'); }
+        });
+        totalAll += rows.length; doneAll += done;
+        var pct = rows.length ? Math.round((done/rows.length)*100) : 0;
+        var fill = card.querySelector('.week-bar i');
+        var txt = card.querySelector('.week-count');
+        if(fill) fill.style.width = pct+'%';
+        if(txt) txt.textContent = done+'/'+rows.length;
+      });
+      var overallPct = totalAll ? Math.round((doneAll/totalAll)*100) : 0;
+      var ob = doc.getElementById('overallbar');
+      var ot = doc.getElementById('overallpct');
+      if(ob) ob.style.width = overallPct+'%';
+      if(ot) ot.textContent = overallPct+'%';
+    }
+    boxes.forEach(function(cb){
+      var key = cb.getAttribute('data-key');
+      if(state[key]) cb.checked = true;
+      cb.addEventListener('change', function(){
+        state[key] = cb.checked;
+        try{ localStorage.setItem(STORE_KEY, JSON.stringify(state)); }catch(e){}
+        refreshChecklist();
+      });
+    });
+    refreshChecklist();
+    var resetBtn = doc.getElementById('resetchecklist');
+    if(resetBtn) resetBtn.addEventListener('click', function(){
+      if(!confirm('Clear all checklist progress?')) return;
+      state = {};
+      try{ localStorage.setItem(STORE_KEY, '{}'); }catch(e){}
+      boxes.forEach(function(cb){ cb.checked = false; });
+      refreshChecklist();
+    });
+
+    /* ---------- idea evaluation matrix ---------- */
+    var matrix = doc.getElementById('ideamatrix');
+    if(matrix){
+      var sliders = matrix.querySelectorAll('input[type=range]');
+      var MKEY = 'bfh-matrix-v1';
+      var mstate = {};
+      try{ mstate = JSON.parse(localStorage.getItem(MKEY) || '{}'); }catch(e){}
+      function refreshMatrix(){
+        var total=0;
+        sliders.forEach(function(s){
+          total += parseInt(s.value,10);
+          var disp = s.parentElement.querySelector('.mval');
+          if(disp) disp.textContent = s.value;
+        });
+        var max = sliders.length*5;
+        doc.getElementById('mtotal').textContent = total + ' / ' + max;
+        var verdict = doc.getElementById('mverdict');
+        if(total >= 20){ verdict.textContent='Worth pursuing'; verdict.className='verdict go'; }
+        else { verdict.textContent='Needs work'; verdict.className='verdict wait'; }
+      }
+      sliders.forEach(function(s){
+        var k = s.getAttribute('data-key');
+        if(mstate[k]!==undefined) s.value = mstate[k];
+        s.addEventListener('input', function(){
+          mstate[k] = s.value;
+          try{ localStorage.setItem(MKEY, JSON.stringify(mstate)); }catch(e){}
+          refreshMatrix();
+        });
+      });
+      refreshMatrix();
+      var mreset = doc.getElementById('resetmatrix');
+      if(mreset) mreset.addEventListener('click', function(){
+        sliders.forEach(function(s){ s.value=3; s.dispatchEvent(new Event('input')); });
+      });
+    }
+
+    /* ---------- stat strip count-up ---------- */
+    var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    doc.querySelectorAll('figure.stat-strip .num').forEach(function(el){
+      var raw = el.getAttribute('data-value');
+      var suffix = el.getAttribute('data-suffix') || '';
+      if(reduce || !raw){ return; }
+      var target = parseFloat(raw);
+      var dur = 900, start = null;
+      function step(ts){
+        if(!start) start = ts;
+        var p = Math.min(1, (ts-start)/dur);
+        var val = (target*p);
+        el.textContent = (Number.isInteger(target) ? Math.round(val) : val.toFixed(1)) + suffix;
+        if(p<1) requestAnimationFrame(step);
+      }
+      var seen = false;
+      var io2 = new IntersectionObserver(function(entries){
+        entries.forEach(function(en){
+          if(en.isIntersecting && !seen){ seen=true; requestAnimationFrame(step); }
+        });
+      }, {threshold:.6});
+      io2.observe(el);
+    });
+
+  })();
+</script>
+</body>
+</html>
